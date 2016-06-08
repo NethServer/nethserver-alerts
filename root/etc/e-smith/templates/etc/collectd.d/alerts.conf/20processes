@@ -1,0 +1,118 @@
+#
+# 20processes
+#
+
+LoadPlugin "processes"
+LoadPlugin "threshold"
+
+{
+   use NethServer::Service;
+   use esmith::ConfigDB;
+
+
+   my $cdb = esmith::ConfigDB->open_ro();
+
+   my @services = map { $_->key } $cdb->get_all_by_prop(type => 'service');
+
+   %processes = ();
+
+   foreach my $s (@services) {
+      my $service = NethServer::Service->new($s, $cdb);
+      if($service->is_enabled() && $service->is_owned()) {
+           $processes{$s} = defined $svcconf{$s} ? $svcconf{$s} : {
+               'min' => 1,
+           };
+      }
+   }
+   '';
+}
+
+<Plugin processes>
+{
+    foreach (keys %processes) {
+       if(defined  $processes{$_}{'match'}) {
+          $OUT .= "  ProcessMatch \"$_\" \"$processes{$_}{'match'}\"\n";
+       } else {
+          $OUT .= "  Process \"$_\"\n";
+       }
+    }
+}
+</Plugin>
+
+<Plugin threshold>
+    {
+    foreach (keys %processes) {
+        if($processes{$_}{'min'} > 0) {
+    $OUT .= "
+    <Plugin processes>
+         Instance \"$_\"
+         <Type \"ps_count\">
+            FailureMin $processes{$_}{'min'}.0
+         </Type>
+    </Plugin>
+    ";
+
+        }
+    }
+    }
+
+ <Plugin "load">
+  <Type "load-relative">
+     DataSource "midterm"
+     FailureMax 1.0
+     Hits 3
+  </Type>
+ </Plugin>
+
+ <Plugin "df">
+    Instance "boot"
+    <Type  "df_complex">
+       Instance "free"
+       FailureMin 100000000
+    </Type>
+ </Plugin>
+
+ <Plugin "df">
+    Instance "root"
+    <Type  "percent_bytes">
+       Instance "free"
+       FailureMin 0.01
+    </Type>
+ </Plugin>
+
+  <Plugin "memory">
+    <Type "percent">
+       Instance "free"
+       FailureMin 1.0
+    </Type>
+ </Plugin>
+
+ <Plugin "swap">
+    <Type "percent">
+       Instance "free"
+       FailureMin 0.05
+    </Type>
+ </Plugin>
+
+ <Plugin "uptime">
+    <Type "uptime">
+       FailureMin 600
+    </Type>
+ </Plugin>
+
+ <Plugin "md">
+     <Type "failed">
+       FailureMax 1.0
+     </Type>
+ </Plugin>
+
+ <Plugin "lsm">
+     <Type "count">
+       Instance "down"
+       FailureMax 1.0
+     </Type>
+ </Plugin>
+
+</Plugin>
+
+

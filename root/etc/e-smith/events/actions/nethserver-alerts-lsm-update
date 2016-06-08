@@ -1,0 +1,31 @@
+#!/bin/bash
+#
+# Copyright (C) 2015 Nethesis S.r.l.
+# http://www.nethesis.it - support@nethesis.it
+#
+# This script is part of NethServer Enterprise
+# All rights are reserved
+#
+
+# Skip event name
+shift;
+
+vardir=$(shorewall show vardir)
+up=0
+down=0
+hostname=$(hostname)
+timestamp=$(date +%s)
+
+shopt -s nullglob
+for F in ${vardir}/*.state; do
+    read V <$F
+    if [[ "$V" == "0" ]]; then
+        ((up++))
+    else
+        ((down++))
+    fi
+done
+
+echo -e "PUTVAL ${hostname}/lsm/count-up ${timestamp}:${up}.0\nPUTVAL ${hostname}/lsm/count-down ${timestamp}:${down}.0\n" | nc -U /var/run/collectd.sock &>/dev/null
+
+

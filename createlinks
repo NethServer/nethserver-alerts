@@ -1,0 +1,32 @@
+#!/usr/bin/perl
+#
+# Copyright (C) 2015 Nethesis S.r.l.
+# http://www.nethesis.it - support@nethesis.it
+#
+# This script is part of NethServer Enterprise
+# All rights are reserved
+#
+
+use esmith::Build::CreateLinks qw(:all);
+
+
+#
+# nethserver-alerts-update event
+#
+event_templates('nethserver-alerts-update', qw(
+   /etc/collectd.d/alerts.conf
+));
+
+event_actions('nethserver-alerts-update', qw(
+    initialize-default-databases        00
+));
+
+event_services('nethserver-alerts-update', qw(
+    collectd restart
+));
+
+
+event_actions('wan-uplink-update', qw(
+    nethserver-alerts-lsm-update 60
+));
+

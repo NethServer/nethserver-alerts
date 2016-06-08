@@ -1,0 +1,86 @@
+{
+  #
+  # 10template_vars
+  #
+
+  # service threshold configuration
+
+  %svcconf = (
+    'postfix' => {
+       'match' => "(master|pickup|qmgr|smtp)",
+       'min' => 3
+    },
+    'rsyslog' => {
+       'match' => "rsyslogd",
+       'min' => 1
+    },
+    'messagebus' => {
+       'match' => "dbus-daemon",
+       'min' => 1
+    },
+    'lsm' => {
+       'min' => 0
+    },
+    'shorewall' => {
+       'min' => 0
+    },
+    'yum-cron' => {
+       'min' => 0
+    },
+    'spamassassin' => {
+       'match' => 'spamd',
+       'min' => 1
+    },
+    'ipsec' => {
+       'match' => 'pluto',
+       'min' => 1
+    },
+    'postgresql' => {
+       'match' => 'postmaster',
+       'min' => 1
+    },
+    'tomcat' => {
+       'match' => 'java',
+       'min' => 1
+    },
+    'nmb' => {
+       'match' => 'nmbd',
+       'min' => 1
+    },
+    'smb' => {
+       'match' => 'smbd',
+       'min' => 1
+    },
+    'winbind' => {
+       'match' => 'winbindd',
+       'min' => 1
+    },
+    'redis-ntopng' => {
+       'match' => 'redis-server.*ntopng\.conf',
+       'min' => 1
+    },
+    'iaxmodem' => {
+       'min' => 0
+    },
+    'hylafax' => {
+       'match' => '(hfaxd|faxq)',
+       'min' => 2
+    },
+    'fetchmail' => {
+       'min' => 0
+    },
+    'cups' => {
+       'match' => 'cupsd',
+       'min' => 1
+    },
+    'ejabberd' => {
+       'match' => '(epmd|beam)',
+       'min' => 2
+    },
+    'openvpn' => {
+       'min' => 0
+    }
+  );
+
+  '';
+}
