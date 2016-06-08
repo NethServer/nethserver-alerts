@@ -6,10 +6,9 @@ License: GPL
 Source0: %{name}-%{version}.tar.gz
 BuildArch: noarch
 Requires: nethserver-collectd >= 1.2.0-1.4.g005fb6b.ns6
-Requires: facter >= 2.4.6
-Requires: rubygem-json
 Requires: python-requests
 Requires: collectd-python
+Requires: collectd-disk
 BuildRequires: nethserver-devtools
 BuildRequires: gettext
 
@@ -34,6 +33,6 @@ rm -rf %{buildroot}
 %doc LICENSE
 
 %changelog
-* Tue Dec 15 2015 Edoardo Spadoni <edoardo.spadoni@nethesis.it> - 0.0.0-1
+* Wed Jun 8 2016 Edoardo Spadoni <edoardo.spadoni@nethesis.it> - 0.0.0-1
 - Initial release
 
