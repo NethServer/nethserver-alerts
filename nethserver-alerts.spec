@@ -33,6 +33,6 @@ rm -rf %{buildroot}
 %doc LICENSE
 
 %changelog
-* Wed Jun 8 2016 Edoardo Spadoni <edoardo.spadoni@nethesis.it> - 0.0.0-1
+* Wed Jun 8 2016 Edoardo Spadoni <edoardo.spadoni@nethesis.it> - 0.0.1
 - Initial release
 
