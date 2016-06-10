@@ -8,7 +8,6 @@ BuildArch: noarch
 Requires: nethserver-collectd >= 1.2.0-1.4.g005fb6b.ns6
 Requires: python-requests
 Requires: collectd-python
-Requires: collectd-disk
 BuildRequires: nethserver-devtools
 BuildRequires: gettext
 
