@@ -59,16 +59,19 @@ LoadPlugin "threshold"
  <Plugin "load">
   <Type "load-relative">
      DataSource "midterm"
-     FailureMax 1.0
+     WarningMax 1
+     FailureMax 10
      Hits 3
+     Hysteresis 3
   </Type>
  </Plugin>
 
  <Plugin "df">
     Instance "boot"
-    <Type  "df_complex">
+    <Type  "percent_bytes">
        Instance "free"
-       FailureMin 100000000
+       FailureMin 15
+       Hysteresis 2
     </Type>
  </Plugin>
 
@@ -76,7 +79,16 @@ LoadPlugin "threshold"
     Instance "root"
     <Type  "percent_bytes">
        Instance "free"
-       FailureMin 0.01
+       FailureMin 15
+       Hysteresis 2
+    </Type>
+ </Plugin>
+
+ <Plugin "swap">
+    <Type "percent">
+       Instance "free"
+       FailureMin 10
+       Hysteresis 1
     </Type>
  </Plugin>
 
@@ -84,13 +96,6 @@ LoadPlugin "threshold"
     <Type "percent">
        Instance "free"
        FailureMin 1.0
-    </Type>
- </Plugin>
-
- <Plugin "swap">
-    <Type "percent">
-       Instance "free"
-       FailureMin 0.05
     </Type>
  </Plugin>
 
@@ -113,6 +118,11 @@ LoadPlugin "threshold"
      </Type>
  </Plugin>
 
+ <Plugin "table">
+     <Type "gauge">
+       Instance "Errors"
+       FailureMax 0
+     </Type>
+ </Plugin>
+
 </Plugin>
-
-
