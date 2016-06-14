@@ -12,7 +12,7 @@ LoadPlugin python
 
 LoadPlugin table
 <Plugin "table">
-    <Table "/var/log/last-backup.log">
+    <Table "/var/log/last-backup-collectd.log">
         Instance "BackupResult"
         Separator " "
         <Result>
