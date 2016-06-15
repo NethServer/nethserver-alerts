@@ -10,3 +10,15 @@ LoadPlugin python
    </Module>
 </Plugin>
 
+LoadPlugin table
+<Plugin "table">
+    <Table "/var/log/last-backup-collectd.log">
+        Instance "BackupResult"
+        Separator " "
+        <Result>
+            Type gauge
+            InstancesFrom 0
+            ValuesFrom 1
+        </Result>
+    </Table>
+</Plugin>
