@@ -5,7 +5,7 @@ Release: 1%{?dist}
 License: GPL
 Source0: %{name}-%{version}.tar.gz
 BuildArch: noarch
-Requires: nethserver-collectd >= 1.2.0-1.4.g005fb6b.ns6
+Requires: nethserver-collectd
 Requires: python-requests
 Requires: collectd-python
 BuildRequires: nethserver-devtools
