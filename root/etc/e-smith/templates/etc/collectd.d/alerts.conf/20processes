@@ -9,7 +9,6 @@ LoadPlugin "threshold"
    use NethServer::Service;
    use esmith::ConfigDB;
 
-
    my $cdb = esmith::ConfigDB->open_ro();
 
    my @services = map { $_->key } $cdb->get_all_by_prop(type => 'service');
@@ -118,11 +117,20 @@ LoadPlugin "threshold"
      </Type>
  </Plugin>
 
- <Plugin "table">
-     <Type "gauge">
-       Instance "Errors"
-       FailureMax 0
-     </Type>
- </Plugin>
+{
+  use esmith::ConfigDB;
+  my $cdb = esmith::ConfigDB->open_ro();
+  my $backup = $cdb->get('backup-data');
+  my $status = (($backup && $backup->prop('status')) || 'disabled');
+
+  if ($status eq 'enabled') {
+    $OUT .= ' <Plugin "table">'. "\n";
+    $OUT .= '   <Type "gauge">'. "\n";
+    $OUT .= '     Instance "Errors"'. "\n";
+    $OUT .= '     FailureMax 0'. "\n";
+    $OUT .= '   </Type>'. "\n";
+    $OUT .= ' </Plugin>'. "\n";
+  }
+}
 
 </Plugin>
