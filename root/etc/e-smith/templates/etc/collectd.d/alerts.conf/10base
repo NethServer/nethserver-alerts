@@ -10,15 +10,24 @@ LoadPlugin python
    </Module>
 </Plugin>
 
-LoadPlugin table
-<Plugin "table">
-    <Table "/var/log/last-backup-collectd.log">
-        Instance "BackupResult"
-        Separator " "
-        <Result>
-            Type gauge
-            InstancesFrom 0
-            ValuesFrom 1
-        </Result>
-    </Table>
-</Plugin>
+{
+  use esmith::ConfigDB;
+  my $confdb = esmith::ConfigDB->open_ro;
+  my $backup = $confdb->get('backup-data');
+  my $status = (($backup && $backup->prop('status')) || 'disabled');
+
+  if ($status eq 'enabled') {
+    $OUT .= 'LoadPlugin table'. "\n";
+    $OUT .= '<Plugin "table">'. "\n";
+    $OUT .= '  <Table "/var/log/last-backup-collectd.log">'. "\n";
+    $OUT .= '    Instance "BackupResult"'. "\n";
+    $OUT .= '    Separator " "'. "\n";
+    $OUT .= '    <Result>'. "\n";
+    $OUT .= '      Type gauge'. "\n";
+    $OUT .= '      InstancesFrom 0'. "\n";
+    $OUT .= '      ValuesFrom 1'. "\n";
+    $OUT .= '    </Result>'. "\n";
+    $OUT .= '  </Table>'. "\n";
+    $OUT .= '</Plugin>'. "\n";
+  }
+}
