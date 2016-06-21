@@ -23,7 +23,6 @@
 use strict;
 use Errno;
 use esmith::ConfigDB;
-use NethServer::BackupData;
 
 my $conf = esmith::ConfigDB->open || die("Could not open config db\n");
 my $backup = $conf->get('backup-data');
