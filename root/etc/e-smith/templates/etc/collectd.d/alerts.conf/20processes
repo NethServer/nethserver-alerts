@@ -56,7 +56,7 @@ LoadPlugin "threshold"
     }
 
  <Plugin "load">
-  <Type "load-relative">
+  <Type "load">
      DataSource "midterm"
      WarningMax 1
      FailureMax 10
