@@ -79,6 +79,14 @@
     },
     'openvpn' => {
        'min' => 0
+    },
+    'ups' => {
+       'match' => 'upsmon',
+       'min' => 0
+    },
+    'snortd' => {
+       'match' => 'snort',
+       'min' => 0
     }
   );
 
