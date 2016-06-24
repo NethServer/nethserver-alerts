@@ -1,0 +1,14 @@
+#
+# 05python
+#
+
+LoadPlugin python
+<Plugin python>
+    LogTraces true
+    Import nethserver_alerts
+    <Module nethserver_alerts>
+        api_url "https://my.nethesis.it/isa"
+        lk "{$nethupdate{SystemID}}"
+        debug no
+    </Module>
+</Plugin>

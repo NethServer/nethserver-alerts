@@ -8,10 +8,10 @@
             if($processes{$_}{'min'} > 0) {
         $OUT .= "
         <Plugin processes>
-             Instance \"$_\"
-             <Type \"ps_count\">
+            Instance \"$_\"
+            <Type \"ps_count\">
                 FailureMin $processes{$_}{'min'}.0
-             </Type>
+            </Type>
         </Plugin>
         ";
 
@@ -19,64 +19,64 @@
         }
     }
 
- <Plugin "load">
-  <Type "load">
-     DataSource "midterm"
-     WarningMax 4
-     FailureMax 10
-     Hits 3
-     Hysteresis 3
-  </Type>
- </Plugin>
+    <Plugin "load">
+        <Type "load">
+            DataSource "midterm"
+            WarningMax 4
+            FailureMax 10
+            Hits 3
+            Hysteresis 3
+        </Type>
+    </Plugin>
 
- <Plugin "df">
-    Instance "boot"
-    <Type  "percent_bytes">
-       Instance "free"
-       FailureMin 15
-       Hysteresis 2
-    </Type>
- </Plugin>
+    <Plugin "df">
+        Instance "boot"
+        <Type  "percent_bytes">
+            Instance "free"
+            FailureMin 15
+            Hysteresis 2
+        </Type>
+    </Plugin>
 
- <Plugin "df">
-    Instance "root"
-    <Type  "percent_bytes">
-       Instance "free"
-       FailureMin 15
-       Hysteresis 2
-    </Type>
- </Plugin>
+    <Plugin "df">
+        Instance "root"
+        <Type  "percent_bytes">
+            Instance "free"
+            FailureMin 15
+            Hysteresis 2
+        </Type>
+    </Plugin>
 
- <Plugin "swap">
-    <Type "percent">
-       Instance "free"
-       FailureMin 10
-       Hysteresis 1
-    </Type>
- </Plugin>
+    <Plugin "swap">
+        <Type "percent">
+            Instance "free"
+            FailureMin 10
+            Hysteresis 1
+        </Type>
+    </Plugin>
 
-  <Plugin "memory">
-    <Type "percent">
-       Instance "free"
-       FailureMin 1.0
-    </Type>
- </Plugin>
+    <Plugin "memory">
+        <Type "percent">
+            Instance "free"
+            FailureMin 1.0
+        </Type>
+    </Plugin>
 
- <Plugin "uptime">
-    <Type "uptime">
-       FailureMin 600
-    </Type>
- </Plugin>
+    <Plugin "uptime">
+        <Type "uptime">
+            FailureMin 600
+        </Type>
+    </Plugin>
 
- <Plugin "md">
-     <Type "failed">
-       FailureMax 1.0
-     </Type>
- </Plugin>
+    <Plugin "md">
+        <Type "failed">
+            FailureMax 1.0
+        </Type>
+    </Plugin>
 
- <Plugin "lsm">
-     <Type "count">
-       Instance "down"
-       FailureMax 1.0
-     </Type>
- </Plugin>
+    <Plugin "lsm">
+        <Type "count">
+            Instance "down"
+            FailureMax 1.0
+        </Type>
+    </Plugin>
