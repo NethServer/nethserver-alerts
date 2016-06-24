@@ -22,7 +22,7 @@
  <Plugin "load">
   <Type "load">
      DataSource "midterm"
-     WarningMax 1
+     WarningMax 4
      FailureMax 10
      Hits 3
      Hysteresis 3
