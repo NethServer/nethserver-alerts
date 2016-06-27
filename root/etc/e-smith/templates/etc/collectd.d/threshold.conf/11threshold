@@ -80,3 +80,19 @@
             FailureMax 1.0
         </Type>
     </Plugin>
+
+{
+  use esmith::ConfigDB;
+  my $cdb = esmith::ConfigDB->open_ro();
+  my $backup = $cdb->get('backup-data');
+  my $status = (($backup && $backup->prop('status')) || 'disabled');
+
+  if ($status eq 'enabled') {
+    $OUT .= '    <Plugin "table">'. "\n";
+    $OUT .= '        <Type "gauge">'. "\n";
+    $OUT .= '            Instance "Errors"'. "\n";
+    $OUT .= '            FailureMax 0'. "\n";
+    $OUT .= '        </Type>'. "\n";
+    $OUT .= '    </Plugin>'. "\n";
+  }
+}
