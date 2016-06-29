@@ -6,11 +6,18 @@ LoadPlugin "processes"
 
 <Plugin processes>
 {
+    use NethServer::Service;
+    use esmith::ConfigDB;
+    my $cdb = esmith::ConfigDB->open_ro();
+
     foreach (keys %svcconf) {
-        if(defined  $svcconf{$_}{'match'}) {
-            $OUT .= "  ProcessMatch \"$_\" \"$svcconf{$_}{'match'}\"\n";
-        } else {
-            $OUT .= "  Process \"$_\"\n";
+        my $service = NethServer::Service->new($_, $cdb);
+        if($service->is_enabled() && $service->is_owned() && $svcconf{$_}{'min'} > 0) {
+            if(defined $svcconf{$_}{'match'}) {
+                $OUT .= "  ProcessMatch \"$_\" \"$svcconf{$_}{'match'}\"\n";
+            } else {
+                $OUT .= "  Process \"$_\"\n";
+            }
         }
     }
 }
