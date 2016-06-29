@@ -1,0 +1,17 @@
+#
+# 09processes
+#
+
+LoadPlugin "processes"
+
+<Plugin processes>
+{
+    foreach (keys %svcconf) {
+        if(defined  $svcconf{$_}{'match'}) {
+            $OUT .= "  ProcessMatch \"$_\" \"$svcconf{$_}{'match'}\"\n";
+        } else {
+            $OUT .= "  Process \"$_\"\n";
+        }
+    }
+}
+</Plugin>

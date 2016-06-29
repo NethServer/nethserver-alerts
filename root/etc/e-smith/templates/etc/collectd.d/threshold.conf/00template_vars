@@ -7,8 +7,8 @@
 
   %svcconf = (
     'postfix' => {
-       'match' => "(master|pickup|qmgr|smtp)",
-       'min' => 3
+       'match' => "^/usr/libexec/postfix/master",
+       'min' => 1
     },
     'rsyslog' => {
        'match' => "rsyslogd",

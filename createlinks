@@ -14,11 +14,11 @@ use esmith::Build::CreateLinks qw(:all);
 # nethserver-alerts-update event
 #
 event_templates('nethserver-alerts-update', qw(
-   /etc/collectd.d/alerts.conf
+   /etc/collectd.d/threshold.conf
 ));
 
 event_templates('nethserver-backup-data-update', qw(
-  /etc/collectd.d/alerts.conf
+  /etc/collectd.d/threshold.conf
 ));
 
 event_actions('nethserver-alerts-update', qw(
