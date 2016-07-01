@@ -24,9 +24,6 @@
     'shorewall' => {
        'min' => 0
     },
-    'yum-cron' => {
-       'min' => 0
-    },
     'spamassassin' => {
        'match' => 'spamd',
        'min' => 1

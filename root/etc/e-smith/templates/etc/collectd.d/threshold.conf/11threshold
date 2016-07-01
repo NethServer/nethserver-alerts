@@ -89,7 +89,6 @@
     $OUT .= '        <Type "gauge">'. "\n";
     $OUT .= '            Instance "BackupErrors"'. "\n";
     $OUT .= '            FailureMax 0'. "\n";
-    $OUT .= '            Interval 3600'. "\n";
     $OUT .= '        </Type>'. "\n";
     $OUT .= '    </Plugin>'. "\n";
   }

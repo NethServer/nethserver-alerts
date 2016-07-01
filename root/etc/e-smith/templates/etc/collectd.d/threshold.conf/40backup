@@ -9,7 +9,9 @@
   my $status = (($backup && $backup->prop('status')) || 'disabled');
 
   if ($status eq 'enabled') {
-    $OUT .= 'LoadPlugin table'. "\n";
+    $OUT .= '<LoadPlugin table>'. "\n";
+    $OUT .= '  Interval 3600'. "\n";
+    $OUT .= '</LoadPlugin>'. "\n";
     $OUT .= '<Plugin "table">'. "\n";
     $OUT .= '  <Table "/var/log/last-backup-collectd.log">'. "\n";
     $OUT .= '    Instance "BackupResult"'. "\n";
