@@ -28,6 +28,6 @@ else
   severity="failure"
 fi
 
-echo -e "PUTNOTIF host=$hostname plugin=wan plugin_instance=$NAME type=$STATE severity=$severity time=$TIMESTAMP message=\"$NAME is $STATE\"\n" | nc -U /var/run/collectd.sock &>/dev/null
+echo -e "PUTNOTIF host=$hostname plugin=wan plugin_instance=$NAME type=down severity=$severity time=$TIMESTAMP message=\"$NAME is $STATE\"\n" | nc -U /var/run/collectd.sock &>/dev/null
 
 exit 0;

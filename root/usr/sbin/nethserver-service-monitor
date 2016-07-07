@@ -36,7 +36,7 @@ foreach my $service (keys %$services) {
             $type = "running";
             $severity = "okay";
         }
-        print $socket "PUTNOTIF host=$host plugin=service plugin_instance=$service type=$type severity=$severity time=$now message=\"$service is $type\"\n";
+        print $socket "PUTNOTIF host=$host plugin=service plugin_instance=$service type=stopped severity=$severity time=$now message=\"$service is $type\"\n";
         chomp( my $line = <$socket> );
    }
 }
