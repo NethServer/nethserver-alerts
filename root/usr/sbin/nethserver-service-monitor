@@ -1,0 +1,42 @@
+#!/usr/bin/perl -w
+#
+# This script checks the status of each registered service,
+# and sends a notification to collectd via unix socket:
+# * FAILURE notification: if the service is enabled and not running
+# * OK notification: if the service is enabled and running
+# * nothing if the service is not enabled
+#
+
+use strict;
+use JSON;
+use IO::Socket::UNIX qw( SOCK_STREAM );
+use Sys::Hostname;
+
+my $socket_path = '/var/run/collectd.sock';
+my $json = JSON->new();
+my $now = time;
+my $host = hostname();
+
+if ( ! -e $socket_path ) {
+    exit 0;
+}
+
+my $socket = IO::Socket::UNIX->new(Type => SOCK_STREAM, Peer => $socket_path) or die("Can't connect to collectd instance: $!\n");
+
+my $tmp = `/usr/libexec/nethserver/read-service-status`;
+my $services = $json->decode($tmp);
+foreach my $service (keys %$services) {
+    my $type = "";
+    my $severity = "";
+    if ( $services->{$service}->{'enabled'} ) {
+        if ( ! $services->{$service}->{'running'} ) {
+            $type = "stopped";
+            $severity = "failure";
+        } else {
+            $type = "running";
+            $severity = "okay";
+        }
+        print $socket "PUTNOTIF host=$host plugin=service plugin_instance=$service type=$type severity=$severity time=$now message=\"$service is $type\"\n";
+        chomp( my $line = <$socket> );
+   }
+}
