@@ -21,10 +21,6 @@ event_templates('nethserver-backup-data-update', qw(
   /etc/collectd.d/threshold.conf
 ));
 
-event_templates('runlevel-adjust', qw(
-   /etc/collectd.d/threshold.conf
-));
-
 event_actions('nethserver-alerts-update', qw(
     initialize-default-databases        00
 ));
@@ -34,10 +30,6 @@ event_actions('post-backup-data', qw(
 ));
 
 event_services('nethserver-alerts-update', qw(
-    collectd restart
-));
-
-event_services('runlevel-adjust', qw(
     collectd restart
 ));
 

@@ -1,28 +1,6 @@
 #
 # 11threshold
 #
-    {
-        use NethServer::Service;
-        use esmith::ConfigDB;
-        my $cdb = esmith::ConfigDB->open_ro();
-
-        foreach (keys %svcconf) {
-            my $service = NethServer::Service->new($_, $cdb);
-            if($service->is_enabled() && $service->is_owned() && $svcconf{$_}{'min'} > 0) {
-        $OUT .= "
-    <Plugin processes>
-        Instance \"$_\"
-        <Type \"ps_count\">
-            FailureMin $svcconf{$_}{'min'}.0
-            Hits 12
-        </Type>
-    </Plugin>
-        ";
-
-            }
-        }
-    }
-
     <Plugin "load">
         <Type "load">
             DataSource "midterm"
