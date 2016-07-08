@@ -1,0 +1,6 @@
+LoadPlugin threshold
+
+<Plugin "threshold">
+    <Type "foo">
+        FailureMin 1.0
+    </Type>

@@ -21,6 +21,14 @@ event_templates('nethserver-backup-data-update', qw(
   /etc/collectd.d/threshold.conf
 ));
 
+event_templates('nethserver-collectd-save', qw(
+  /etc/collectd.d/threshold.conf
+));
+
+event_templates('nethserver-collectd-update', qw(
+  /etc/collectd.d/threshold.conf
+));
+
 event_actions('nethserver-alerts-update', qw(
     initialize-default-databases        00
 ));
