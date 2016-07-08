@@ -10,22 +10,24 @@
 # Skip event name
 shift;
 
-vardir=$(shorewall show vardir)
-up=0
-down=0
+STATE=${1}
+NAME=${2}
+PREVSTATE=${15}
+TIMESTAMP=${16}
+
 hostname=$(hostname)
-timestamp=$(date +%s)
+severity=""
 
-shopt -s nullglob
-for F in ${vardir}/*.state; do
-    read V <$F
-    if [[ "$V" == "0" ]]; then
-        ((up++))
-    else
-        ((down++))
-    fi
-done
+if [ ${STATE} = ${PREVSTATE} ]; then
+    exit 0
+fi
 
-echo -e "PUTVAL ${hostname}/lsm/count-up ${timestamp}:${up}.0\nPUTVAL ${hostname}/lsm/count-down ${timestamp}:${down}.0\n" | nc -U /var/run/collectd.sock &>/dev/null
+if [ ${STATE} = up ]; then
+  severity="okay"
+else
+  severity="failure"
+fi
 
+echo -e "PUTNOTIF host=$hostname plugin=wan plugin_instance=$NAME type=down severity=$severity time=$TIMESTAMP message=\"$NAME is $STATE\"\n" | nc -U /var/run/collectd.sock &>/dev/null
 
+exit 0;

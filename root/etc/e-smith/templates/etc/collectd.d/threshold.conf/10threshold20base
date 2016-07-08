@@ -1,24 +1,6 @@
 #
 # 11threshold
 #
-
-
-    {
-        foreach (keys %processes) {
-            if($processes{$_}{'min'} > 0) {
-        $OUT .= "
-        <Plugin processes>
-            Instance \"$_\"
-            <Type \"ps_count\">
-                FailureMin $processes{$_}{'min'}.0
-            </Type>
-        </Plugin>
-        ";
-
-            }
-        }
-    }
-
     <Plugin "load">
         <Type "load">
             DataSource "midterm"
@@ -55,13 +37,6 @@
         </Type>
     </Plugin>
 
-    <Plugin "memory">
-        <Type "percent">
-            Instance "free"
-            FailureMin 1.0
-        </Type>
-    </Plugin>
-
     <Plugin "uptime">
         <Type "uptime">
             FailureMin 600
@@ -90,7 +65,7 @@
   if ($status eq 'enabled') {
     $OUT .= '    <Plugin "table">'. "\n";
     $OUT .= '        <Type "gauge">'. "\n";
-    $OUT .= '            Instance "Errors"'. "\n";
+    $OUT .= '            Instance "BackupErrors"'. "\n";
     $OUT .= '            FailureMax 0'. "\n";
     $OUT .= '        </Type>'. "\n";
     $OUT .= '    </Plugin>'. "\n";
