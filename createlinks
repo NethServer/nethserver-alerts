@@ -15,18 +15,22 @@ use esmith::Build::CreateLinks qw(:all);
 #
 event_templates('nethserver-alerts-update', qw(
    /etc/collectd.d/threshold.conf
+   /etc/collectd.d/filter.conf
 ));
 
 event_templates('nethserver-backup-data-update', qw(
-  /etc/collectd.d/threshold.conf
+   /etc/collectd.d/threshold.conf
+   /etc/collectd.d/filter.conf
 ));
 
 event_templates('nethserver-collectd-save', qw(
   /etc/collectd.d/threshold.conf
+  /etc/collectd.d/filter.conf
 ));
 
 event_templates('nethserver-collectd-update', qw(
   /etc/collectd.d/threshold.conf
+  /etc/collectd.d/filter.conf
 ));
 
 event_actions('nethserver-alerts-update', qw(

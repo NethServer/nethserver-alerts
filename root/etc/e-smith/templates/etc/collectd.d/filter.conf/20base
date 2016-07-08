@@ -1,0 +1,68 @@
+	<Rule "skip_ps_count">
+		<Match "regex">
+			Plugin "processes"
+			Type "ps_count"
+		</Match>
+		<Target "jump">
+                   Chain "threshold"
+                </Target>
+	</Rule>
+        <Rule "skip_df_percentage">
+                <Match "regex">
+                     Plugin "df"
+                     Type "percent"
+                </Match>
+		<Target "jump">
+                   Chain "threshold"
+                </Target>
+        </Rule>
+        <Rule "allow_processes_forkrate">
+                <Match "regex">
+                     Plugin "^processes$"
+                     Type "^fork_rate$"
+                </Match>
+                Target "write"
+        </Rule>
+	<Rule "ignore_processes_other">
+		<Match "regex">
+			Plugin "^processes$"
+			Type ".*"
+		</Match>
+		Target "stop"
+	</Rule>
+	<Rule "ignore_if_errors">
+		<Match "regex">
+			Plugin "^interface$"
+			Type "^if_errors$"
+		</Match>
+		Target "stop"
+	</Rule>
+	<Rule "ignore_if_packets">
+		<Match "regex">
+			Plugin "^interface$"
+			Type "^if_packets$"
+		</Match>
+		Target "stop"
+	</Rule>
+	<Rule "ignore_disk_merged">
+		<Match "regex">
+			Plugin "^disk$"
+			Type "^disk_merged$"
+		</Match>
+		Target "stop"
+	</Rule>
+	<Rule "ignore_disk_ops">
+		<Match "regex">
+			Plugin "^disk$"
+			Type "^disk_ops$"
+		</Match>
+		Target "stop"
+	</Rule>
+	<Rule "ignore_disk_time">
+		<Match "regex">
+			Plugin "^disk$"
+			Type "^disk_time$"
+		</Match>
+		Target "stop"
+	</Rule>
+	Target "write"

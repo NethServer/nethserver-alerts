@@ -1,0 +1,6 @@
+<Chain "threshold">
+   <Target "write">
+       Plugin threshold
+   </Target>
+   Target "stop"
+</Chain>
