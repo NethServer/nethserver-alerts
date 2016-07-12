@@ -25,9 +25,16 @@ my $socket = IO::Socket::UNIX->new(Type => SOCK_STREAM, Peer => $socket_path) or
 
 my $tmp = `/usr/libexec/nethserver/read-service-status`;
 my $services = $json->decode($tmp);
+my @ignored_services = ('iaxmodem', 'fetchmail','openvpn');
+
 foreach my $service (keys %$services) {
     my $type = "";
     my $severity = "";
+
+    if (grep $_ eq $service, @ignored_services) {
+        next;
+    }
+
     if ( $services->{$service}->{'enabled'} ) {
         if ( ! $services->{$service}->{'running'} ) {
             $type = "stopped";
