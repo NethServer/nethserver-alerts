@@ -44,6 +44,6 @@ foreach my $service (keys %$services) {
             $severity = "okay";
         }
         print $socket "PUTNOTIF host=$host plugin=service plugin_instance=$service type=stopped severity=$severity time=$now message=\"$service is $type\"\n";
-        chomp( my $line = <$socket> );
+        my $line = <$socket>;
    }
 }
