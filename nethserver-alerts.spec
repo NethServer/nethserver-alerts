@@ -8,11 +8,30 @@ BuildArch: noarch
 Requires: nethserver-collectd
 Requires: python-requests
 Requires: collectd-python
+Requires: python-daemon, python-setproctitle
 BuildRequires: nethserver-devtools
 BuildRequires: gettext
 
 %description
 NethServer monitoring agent to trigger alarms
+
+%post
+/sbin/chkconfig --add nms
+/sbin/service nms start
+
+%preun
+if [ $1 = 0 ]; then
+        /sbin/service nms stop > /dev/null 2>&1
+        /sbin/chkconfig --del nms
+fi
+
+
+%postun
+if [ $1 -ge 1 ] ; then
+        /sbin/service nms condrestart > /dev/null 2>&1 || :
+fi
+
+
 
 %prep
 %setup -q
