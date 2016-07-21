@@ -2,9 +2,4 @@
 # 01global
 #
 
-<Plugin "syslog">
-  NotifyLevel "WARNING"
-  LogLevel warning
-</Plugin>
-
 Timeout 6
