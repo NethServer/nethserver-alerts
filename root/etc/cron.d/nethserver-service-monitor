@@ -1,2 +1,0 @@
-# Monitor services status every 5 minutes
-*/5 * * * * root /usr/sbin/nethserver-service-monitor
