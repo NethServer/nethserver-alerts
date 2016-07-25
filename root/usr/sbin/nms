@@ -49,11 +49,14 @@ def notify(host, now, service, severity, type):
     if not daemonize:
         print msg
 
-    client = socket.socket( socket.AF_UNIX )
-    client.connect(collectd_sock)
-    client.send(msg)
-    _readline(client)
-    client.close()
+    try:
+        client = socket.socket( socket.AF_UNIX )
+        client.connect(collectd_sock)
+        client.send(msg)
+        _readline(client)
+        client.close()
+    except socket.error, e:
+        print "Socket exception: %s " % e
 
 def run():
     global tick
