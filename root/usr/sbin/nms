@@ -94,7 +94,7 @@ def run():
         time.sleep(tick)
 
 def help():
-    print "nsm [-f] [-h]"
+    print "nms [-f] [-h]"
     print "  -f Run in foreground"
     print "  -h Show this help"
 
