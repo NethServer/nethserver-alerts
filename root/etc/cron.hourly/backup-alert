@@ -25,36 +25,47 @@ use Errno;
 use esmith::ConfigDB;
 use IO::Socket::UNIX;
 
-my $conf = esmith::ConfigDB->open || die("Could not open config db\n");
+# duplicity is running?
+my $duplicity_status = `ps aux | grep [d]uplicity`;
+if($duplicity_status ne "") { exit (1); }
+
+# get configuration props
+my $conf = esmith::ConfigDB->open || exit (2);
 my $hostname = $conf->get('SystemName')->value();
 my $backup = $conf->get('backup-data');
+my $backup_status = $backup->prop('status');
+
+# read file
+if($backup_status eq 'disabled') { exit (3); }
 my $logFile = $backup->prop('LogFile') || '/var/log/last-backup.log';
-my $sock_path = '/var/run/collectd.sock';
-
-open(my $fh, "<", $logFile) || die("Could not open log file\n");
-
+open(my $fh, "<", $logFile) || exit (4);
 read $fh, my $content, -s $fh;
-
 $content =~ /\nErrors\s(\d)/;
-my $bakres = $1;
+my $res = $1;
 
-my $severity = ($bakres eq 0 ? 'okay' : 'failure');
-my $timestamp = time();
+# check severity
+my $severity = ($res eq 0 ? 'okay' : 'failure');
 
-my $client = IO::Socket::UNIX->new(
+# open socket
+my $sock_path = '/var/run/collectd.sock';
+my $socket = IO::Socket::UNIX->new(
     Type => SOCK_STREAM(),
     Peer => $sock_path,
 );
 
-$client->send("PUTNOTIF host=$hostname plugin=system plugin_instance=backup type=failure severity=$severity time=$timestamp message=\"backup state is $severity\"\n");
+# sleep random
+sleep(int(rand(10)));
+
+# write on collectd socket
+my $timestamp = time();
+$socket->send("PUTNOTIF host=$hostname plugin=system plugin_instance=backup type=failure severity=$severity time=$timestamp message=\"backup state is $severity\"\n");
+
+# wait for response
 my $buf;
-$client->recv($buf, 1024);
+$socket->recv($buf, 1024);
+$socket->close();
 
-#print `echo -e "PUTNOTIF host=$hostname plugin=system plugin_instance=backup type=down severity=$severity time=$timestamp message=\"backup state is $severity\"\n" | nc -U /var/run/collectd.sock &>/dev/null`;
-#print `echo -e "PUTNOTIF host=$hostname plugin=system plugin_instance=backup type=down severity=$severity time=$timestamp message=\"backup state is $severity\"\n"`;
+# close file
+close($fh) || exit (5);
 
-$client->close();
-
-close($fh) || die("Could not close log file\n");
-
-exit 0;
+exit (0);
