@@ -1,0 +1,60 @@
+#!/usr/bin/perl -w
+
+#
+# Copyright (C) 2013 Nethesis S.r.l.
+# http://www.nethesis.it - support@nethesis.it
+#
+# This script is part of NethServer.
+#
+# NethServer is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License,
+# or any later version.
+#
+# NethServer is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with NethServer.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+use strict;
+use Errno;
+use esmith::ConfigDB;
+use IO::Socket::UNIX;
+
+my $conf = esmith::ConfigDB->open || die("Could not open config db\n");
+my $hostname = $conf->get('SystemName')->value();
+my $backup = $conf->get('backup-data');
+my $logFile = $backup->prop('LogFile') || '/var/log/last-backup.log';
+my $sock_path = '/var/run/collectd.sock';
+
+open(my $fh, "<", $logFile) || die("Could not open log file\n");
+
+read $fh, my $content, -s $fh;
+
+$content =~ /\nErrors\s(\d)/;
+my $bakres = $1;
+
+my $severity = ($bakres eq 0 ? 'okay' : 'failure');
+my $timestamp = time();
+
+my $client = IO::Socket::UNIX->new(
+    Type => SOCK_STREAM(),
+    Peer => $sock_path,
+);
+
+$client->send("PUTNOTIF host=$hostname plugin=system plugin_instance=backup type=failure severity=$severity time=$timestamp message=\"backup state is $severity\"\n");
+my $buf;
+$client->recv($buf, 1024);
+
+#print `echo -e "PUTNOTIF host=$hostname plugin=system plugin_instance=backup type=down severity=$severity time=$timestamp message=\"backup state is $severity\"\n" | nc -U /var/run/collectd.sock &>/dev/null`;
+#print `echo -e "PUTNOTIF host=$hostname plugin=system plugin_instance=backup type=down severity=$severity time=$timestamp message=\"backup state is $severity\"\n"`;
+
+$client->close();
+
+close($fh) || die("Could not close log file\n");
+
+exit 0;
