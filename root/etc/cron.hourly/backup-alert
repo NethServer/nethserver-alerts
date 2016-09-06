@@ -35,16 +35,32 @@ my $hostname = $conf->get('SystemName')->value();
 my $backup = $conf->get('backup-data');
 my $backup_status = $backup->prop('status');
 
-# read file
+# check if backup is enabled
 if($backup_status eq 'disabled') { exit (3); }
-my $logFile = $backup->prop('LogFile') || '/var/log/last-backup.log';
-open(my $fh, "<", $logFile) || exit (4);
-read $fh, my $content, -s $fh;
-$content =~ /\nErrors\s(\d)/;
-my $res = $1;
 
-# check severity
-my $severity = ($res eq 0 ? 'okay' : 'failure');
+# open file
+my $severity = '';
+my $logFile = $backup->prop('LogFile') || '/var/log/last-backup.log';
+if( -e $logFile ) {
+    open(my $fh, "<", $logFile);
+    read $fh, my $content, -s $fh;
+
+    # check if file contains statistics
+    if($content =~ /\[\sBackup\sStatistics\s\]/) {
+        # check for errors
+        $content =~ /\nErrors\s(\d+)/;
+        # check severity
+        $severity = ($1 eq 0 ? 'okay' : 'failure');
+    } else {
+        # backup is failed for some reasons...
+        $severity = 'failure';
+    }
+
+    # close file
+    close($fh) || exit (5);
+} else {
+    $severity = 'failure';
+}
 
 # open socket
 my $sock_path = '/var/run/collectd.sock';
@@ -64,8 +80,5 @@ $socket->send("PUTNOTIF host=$hostname plugin=system plugin_instance=backup type
 my $buf;
 $socket->recv($buf, 1024);
 $socket->close();
-
-# close file
-close($fh) || exit (5);
 
 exit (0);
