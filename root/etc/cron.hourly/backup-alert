@@ -45,8 +45,8 @@ if( -e $logFile ) {
     open(my $fh, "<", $logFile);
     read $fh, my $content, -s $fh;
 
-    # check if file contains statistics
-    if($content =~ /\[\sBackup\sStatistics\s\]/) {
+    # check if file is in correct format
+    if($content =~ /\nErrors\s\d+/) {
         # check for errors
         $content =~ /\nErrors\s(\d+)/;
         # check severity
