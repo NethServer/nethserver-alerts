@@ -1,6 +1,6 @@
 Summary: NethServer alerts
 Name: nethserver-alerts
-Version: 0.0.3
+Version: 0.0.4
 Release: 1%{?dist}
 License: GPL
 Source0: %{name}-%{version}.tar.gz
@@ -51,6 +51,9 @@ rm -rf %{buildroot}
 %doc LICENSE
 
 %changelog
+* Fri Sep 09 2016 Giacomo Sanchietti <giacomo.sanchietti@nethesis.it> - 0.0.4-1
+- Change load threshold, add backup alert, improved LK handling - [NH:4209]
+
 * Mon Jul 25 2016 Giacomo Sanchietti <giacomo.sanchietti@nethesis.it> - 0.0.3-1
 - First release of nms daemon [NH:4205]
 - Hearbeats are now sent every 10 minutes
