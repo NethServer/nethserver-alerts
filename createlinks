@@ -37,10 +37,6 @@ event_actions('nethserver-alerts-update', qw(
     initialize-default-databases        00
 ));
 
-event_actions('post-backup-data', qw(
-   collectd-report         100
-));
-
 event_services('nethserver-alerts-update', qw(
     collectd restart
 ));
