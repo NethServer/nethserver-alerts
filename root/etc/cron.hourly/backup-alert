@@ -33,7 +33,7 @@ if($duplicity_status ne "") { exit (1); }
 my $conf = esmith::ConfigDB->open || exit (2);
 my $hostname = $conf->get('SystemName')->value();
 my $backup = $conf->get('backup-data');
-my $backup_status = $backup->prop('status');
+my $backup_status = $backup ? $backup->prop('status') : 'disabled';
 
 # check if backup is enabled
 if($backup_status eq 'disabled') { exit (3); }
