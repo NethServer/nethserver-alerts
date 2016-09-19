@@ -1,0 +1,10 @@
+[Unit]
+Description=NethServer Monitor Services (NMS)
+After=collectd.service
+
+[Service]
+Type=simple
+ExecStart=/usr/sbin/nms 
+
+[Install]
+WantedBy=multi-user.target

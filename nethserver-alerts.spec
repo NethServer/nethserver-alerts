@@ -1,37 +1,17 @@
 Summary: NethServer alerts
 Name: nethserver-alerts
-Version: 0.0.3
+Version: 0.0.4
 Release: 1%{?dist}
 License: GPL
 Source0: %{name}-%{version}.tar.gz
 BuildArch: noarch
 Requires: nethserver-collectd
 Requires: python-requests
-Requires: collectd-python
-Requires: python-daemon, python-setproctitle
 BuildRequires: nethserver-devtools
 BuildRequires: gettext
 
 %description
 NethServer monitoring agent to trigger alarms
-
-%post
-/sbin/chkconfig --add nms
-/sbin/service nms start
-
-%preun
-if [ $1 = 0 ]; then
-        /sbin/service nms stop > /dev/null 2>&1
-        /sbin/chkconfig --del nms
-fi
-
-
-%postun
-if [ $1 -ge 1 ] ; then
-        /sbin/service nms condrestart > /dev/null 2>&1 || :
-fi
-
-
 
 %prep
 %setup -q
@@ -39,6 +19,8 @@ fi
 %build
 %{makedocs}
 perl createlinks
+mkdir -p root%{python2_sitelib}
+mv -v nethserver_alerts.py root%{python2_sitelib}
 
 %install
 rm -rf %{buildroot}
@@ -48,9 +30,13 @@ rm -rf %{buildroot}
 
 %files -f %{name}-%{version}-%{release}-filelist
 %defattr(-,root,root)
+%dir %{_nseventsdir}/%{name}-update
 %doc LICENSE
 
 %changelog
+* Fri Sep 09 2016 Giacomo Sanchietti <giacomo.sanchietti@nethesis.it> - 0.0.4-1
+- Change load threshold, add backup alert, improved LK handling - [NH:4209]
+
 * Mon Jul 25 2016 Giacomo Sanchietti <giacomo.sanchietti@nethesis.it> - 0.0.3-1
 - First release of nms daemon [NH:4205]
 - Hearbeats are now sent every 10 minutes

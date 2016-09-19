@@ -8,12 +8,11 @@
 
 import time, socket, subprocess, os, sys, getopt
 import json
-import daemon
 
 
-daemonize = 1
+debug = 1
 tick = 300
-ignored_services = ('iaxmodem', 'fetchmail','openvpn');
+ignored_services = ('');
 
 '''
 _readline and _readlines methods borrowed from the _fileobject class 
@@ -46,7 +45,7 @@ def notify(host, now, service, severity, type):
     if not os.path.exists(collectd_sock):
         return
 
-    if not daemonize:
+    if debug:
         print msg
 
     try:
@@ -59,8 +58,11 @@ def notify(host, now, service, severity, type):
         print "Socket exception: %s " % e
 
 def run():
-    global tick
+    global tick, debug
     old_services = {}
+
+    if debug:
+        print "Services will be checked every %i seconds..." % tick
 
     while 1:
         host = socket.gethostname()
@@ -94,14 +96,14 @@ def run():
         time.sleep(tick)
 
 def help():
-    print "nms [-f] [-h]"
-    print "  -f Run in foreground"
+    print "nms [-d] [-h]"
+    print "  -d Print debug messages"
     print "  -h Show this help"
 
 def main(argv):
-    global daemonize, tick
+    global debug, tick
     try:
-        opts, args = getopt.getopt(argv,"hf")
+        opts, args = getopt.getopt(argv,"hd")
     except getopt.GetoptError:
         help()
         sys.exit(2)
@@ -110,23 +112,12 @@ def main(argv):
         if opt == '-h':
             help()
             sys.exit(0)
-        if opt == '-f':
-            daemonize = 0
+        if opt == '-d':
+            debug = 1
             tick = 5
+
+    run()
 
 
 if __name__ == "__main__":
    main(sys.argv[1:])
-
-if daemonize:
-    try:
-        import setproctitle
-        setproctitle.setproctitle('nms')
-    except:
-        pass # Ignore errors, since this is only cosmetic
-
-    with daemon.DaemonContext():
-       run()
-else:
-    print "Services will be checked every %i seconds..." % tick
-    run()
