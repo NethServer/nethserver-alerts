@@ -26,7 +26,7 @@ use esmith::ConfigDB;
 use IO::Socket::UNIX;
 
 # duplicity is running?
-my $duplicity_status = `ps aux | grep [d]uplicity`;
+my $duplicity_status = `ps aux | grep [b]ackup-data`;
 if($duplicity_status ne "") { exit (1); }
 
 # get configuration props
