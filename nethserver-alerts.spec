@@ -1,6 +1,6 @@
 Summary: NethServer alerts
 Name: nethserver-alerts
-Version: 0.0.4
+Version: 1.0.0
 Release: 1%{?dist}
 License: GPL
 Source0: %{name}-%{version}.tar.gz
@@ -34,6 +34,9 @@ rm -rf %{buildroot}
 %doc LICENSE
 
 %changelog
+* Thu Sep 22 2016 Giacomo Sanchietti <giacomo.sanchietti@nethesis.it> - 1.0.0-1
+- First NS7 release
+
 * Fri Sep 09 2016 Giacomo Sanchietti <giacomo.sanchietti@nethesis.it> - 0.0.4-1
 - Change load threshold, add backup alert, improved LK handling - [NH:4209]
 
