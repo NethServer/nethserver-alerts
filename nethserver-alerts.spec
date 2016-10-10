@@ -1,6 +1,6 @@
 Summary: NethServer alerts
 Name: nethserver-alerts
-Version: 0.0.5
+Version: 0.0.6
 Release: 1%{?dist}
 License: GPL
 Source0: %{name}-%{version}.tar.gz
@@ -51,6 +51,9 @@ rm -rf %{buildroot}
 %doc LICENSE
 
 %changelog
+* Mon Oct 10 2016 Giacomo Sanchietti <giacomo.sanchietti@nethesis.it> - 0.0.6-1
+- Fix backup status when backup does not exist.
+
 * Thu Sep 22 2016 Giacomo Sanchietti <giacomo.sanchietti@nethesis.it> - 0.0.5-1
 - Fix backup alarm
 
