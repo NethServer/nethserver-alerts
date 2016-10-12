@@ -18,6 +18,11 @@ TIMESTAMP=${16}
 hostname=$(hostname)
 severity=""
 
+# avoid alerts on lsm restart
+if [ ${PREVSTATE} = 'unknown' ]; then
+    exit 0
+fi
+
 if [ ${STATE} = ${PREVSTATE} ]; then
     exit 0
 fi
