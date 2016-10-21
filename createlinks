@@ -23,6 +23,10 @@ event_templates('nethserver-backup-data-update', qw(
    /etc/collectd.d/filter.conf
 ));
 
+event_templates('nethserver-register-save', qw(
+  /etc/collectd.d/threshold.conf
+));
+
 event_templates('nethserver-collectd-save', qw(
   /etc/collectd.d/threshold.conf
   /etc/collectd.d/filter.conf
@@ -38,6 +42,10 @@ event_actions('nethserver-alerts-update', qw(
 ));
 
 event_services('nethserver-alerts-update', qw(
+    collectd restart
+));
+
+event_services('nethserver-register-save', qw(
     collectd restart
 ));
 
