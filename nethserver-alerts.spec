@@ -1,6 +1,6 @@
 Summary: NethServer alerts
 Name: nethserver-alerts
-Version: 1.0.0
+Version: 1.0.1
 Release: 1%{?dist}
 License: GPL
 Source0: %{name}-%{version}.tar.gz
@@ -34,6 +34,9 @@ rm -rf %{buildroot}
 %doc LICENSE
 
 %changelog
+* Fri Oct 21 2016 Giacomo Sanchietti <giacomo.sanchietti@nethesis.it> - 1.0.1-1
+- Reconfigure collectd after server registration - Nethesis/dev#5021
+
 * Thu Sep 22 2016 Giacomo Sanchietti <giacomo.sanchietti@nethesis.it> - 1.0.0-1
 - First NS7 release
 
