@@ -1,6 +1,6 @@
 Summary: NethServer alerts
 Name: nethserver-alerts
-Version: 0.0.6
+Version: 0.0.7
 Release: 1%{?dist}
 License: GPL
 Source0: %{name}-%{version}.tar.gz
@@ -51,6 +51,10 @@ rm -rf %{buildroot}
 %doc LICENSE
 
 %changelog
+* Fri Oct 21 2016 Giacomo Sanchietti <giacomo.sanchietti@nethesis.it> - 0.0.7-1
+- added expand template and collectd restart on register-save. Nethesis/dev#5021
+- lsm-update: avoid alerts on lsm restart.
+
 * Mon Oct 10 2016 Giacomo Sanchietti <giacomo.sanchietti@nethesis.it> - 0.0.6-1
 - Fix backup status when backup does not exist.
 
