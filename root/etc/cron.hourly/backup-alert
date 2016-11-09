@@ -67,7 +67,7 @@ my $sock_path = '/var/run/collectd.sock';
 my $socket = IO::Socket::UNIX->new(
     Type => SOCK_STREAM(),
     Peer => $sock_path,
-);
+) || exit(1);
 
 # sleep random
 sleep(int(rand(10)));
