@@ -1,6 +1,6 @@
 Summary: NethServer alerts
 Name: nethserver-alerts
-Version: 0.0.7
+Version: 0.0.8
 Release: 1%{?dist}
 License: GPL
 Source0: %{name}-%{version}.tar.gz
@@ -51,6 +51,9 @@ rm -rf %{buildroot}
 %doc LICENSE
 
 %changelog
+* Mon Nov 14 2016 Giacomo Sanchietti <giacomo.sanchietti@nethesis.it> - 0.0.8-1
+- backup-alert: avoid useless cron mails Nethesis/dev#5030
+
 * Fri Oct 21 2016 Giacomo Sanchietti <giacomo.sanchietti@nethesis.it> - 0.0.7-1
 - added expand template and collectd restart on register-save. Nethesis/dev#5021
 - lsm-update: avoid alerts on lsm restart.
