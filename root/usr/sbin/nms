@@ -13,7 +13,7 @@ import daemon
 
 daemonize = 1
 tick = 300
-ignored_services = ('iaxmodem', 'fetchmail','openvpn');
+ignored_services = ('iaxmodem', 'fetchmail','openvpn', 'nslcd');
 
 '''
 _readline and _readlines methods borrowed from the _fileobject class 
