@@ -41,6 +41,11 @@ if($backup_status eq 'disabled') { exit (3); }
 # open file
 my $severity = '';
 my $logFile = $backup->prop('LogFile') || '/var/log/last-backup.log';
+
+# backup-data has never been executed
+if ( ! -e '/var/log/backup-data.log') {
+    exit (3);
+}
 if( -e $logFile ) {
     open(my $fh, "<", $logFile);
     read $fh, my $content, -s $fh;
