@@ -34,6 +34,8 @@ my $conf = esmith::ConfigDB->open || exit (2);
 my $hostname = $conf->get('SystemName')->value();
 my $backup = $conf->get('backup-data');
 my $backup_status = $backup ? $backup->prop('status') : 'disabled';
+my $status_file = '/var/run/backup-alert';
+my $notify = 1;
 
 # check if backup is enabled
 if($backup_status eq 'disabled') { exit (3); }
@@ -65,6 +67,27 @@ if( -e $logFile ) {
     close($fh) || exit (5);
 } else {
     $severity = 'failure';
+}
+
+if ( -e $status_file ) {
+    my $last_status;
+    {
+        local $/;
+        open my $fh, '<', $status_file or die "Can't open $status_file: $!";
+        $last_status = <$fh>;
+    }
+    # backup status not changed, do not notify collectd
+    if ($last_status eq $severity) {
+        $notify = 0;
+    }
+} else {
+    open(my $fh, '>', $status_file) or die "Cant' write to $status_file $!";
+    print $fh $severity;
+    close $fh;
+}
+
+if ( ! $notify ) {
+    exit (0);
 }
 
 # open socket
