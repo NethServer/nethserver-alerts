@@ -80,11 +80,12 @@ if ( -e $status_file ) {
     if ($last_status eq $severity) {
         $notify = 0;
     }
-} else {
-    open(my $fh, '>', $status_file) or die "Cant' write to $status_file $!";
-    print $fh $severity;
-    close $fh;
 }
+
+# save last status
+open(my $fh, '>', $status_file) or die "Cant' write to $status_file $!";
+print $fh $severity;
+close $fh;
 
 if ( ! $notify ) {
     exit (0);
