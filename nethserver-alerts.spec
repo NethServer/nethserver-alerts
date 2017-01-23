@@ -1,6 +1,6 @@
 Summary: NethServer alerts
 Name: nethserver-alerts
-Version: 1.0.2
+Version: 1.0.3
 Release: 1%{?dist}
 License: GPL
 Source0: %{name}-%{version}.tar.gz
@@ -34,6 +34,9 @@ rm -rf %{buildroot}
 %doc LICENSE
 
 %changelog
+* Mon Jan 23 2017 Giacomo Sanchietti <giacomo.sanchietti@nethesis.it> - 1.0.3-1
+- backup-alert: avoid duplicated and false alerts - Nethesis/dev#5050  Nethesis/dev#5049
+
 * Mon Nov 14 2016 Giacomo Sanchietti <giacomo.sanchietti@nethesis.it> - 1.0.2-1
 - backup-alert: avoid useless cron mails Nethesis/dev#5030
 
