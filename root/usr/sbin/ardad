@@ -1,0 +1,4 @@
+#!/bin/bash
+nethserver-inventory
+systemctl restart collectd
+systemctl restart nms
