@@ -1,0 +1,4 @@
+#!/bin/bash
+nethserver-inventory
+service collectd restart
+service nms restart

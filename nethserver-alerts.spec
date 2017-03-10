@@ -11,6 +11,8 @@ Requires: collectd-python
 Requires: python-daemon, python-setproctitle
 BuildRequires: nethserver-devtools
 BuildRequires: gettext
+Obsoletes: ardad
+Provides: ardad
 
 %description
 NethServer monitoring agent to trigger alarms
