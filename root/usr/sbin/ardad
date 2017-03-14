@@ -1,4 +1,4 @@
 #!/bin/bash
 nethserver-inventory
-service collectd restart
-service nms restart
+service collectd restart >/dev/null
+service nms restart >/dev/null
