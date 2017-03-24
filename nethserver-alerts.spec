@@ -1,6 +1,6 @@
 Summary: NethServer alerts
 Name: nethserver-alerts
-Version: 0.0.9
+Version: 0.1.0
 Release: 1%{?dist}
 License: GPL
 Source0: %{name}-%{version}.tar.gz
@@ -53,6 +53,10 @@ rm -rf %{buildroot}
 %doc LICENSE
 
 %changelog
+* Fri Mar 24 2017 Giacomo Sanchietti <giacomo.sanchietti@nethesis.it> - 0.1.0-1
+- Obsolete ardad - Nethesis/dev#5087
+- Add "ardad --send" alias
+
 * Mon Jan 23 2017 Giacomo Sanchietti <giacomo.sanchietti@nethesis.it> - 0.0.9-1
 - backup-alert: avoid duplicated and false alerts - Nethesis/dev#5050  Nethesis/dev#5049
 - nsm: disable alerts on nslcd service - Nethesis/dev#5048
