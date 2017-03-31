@@ -1,0 +1,12 @@
+{
+  #
+  # Nethesis/dev#5087 -- remove ardad key
+  #
+
+  my $ardad = $DB->get('ardad') || undef;
+  if (defined $ardad) {
+      $ardad->delete('ardad');
+  }
+  
+  '';   
+}
