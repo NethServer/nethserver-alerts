@@ -44,8 +44,13 @@
     </Plugin>
 
     <Plugin "md">
-        <Type "failed">
-            FailureMax 1.0
+        <Type "md_disks">
+            Instance "failed"
+            FailureMax 0.1
+        </Type>
+        <Type "md_disks">
+            Instance "missing"
+            FailureMax 0.1
         </Type>
     </Plugin>
 
