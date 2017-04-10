@@ -1,6 +1,6 @@
 Summary: NethServer alerts
 Name: nethserver-alerts
-Version: 1.0.4
+Version: 1.0.5
 Release: 1%{?dist}
 License: GPL
 Source0: %{name}-%{version}.tar.gz
@@ -34,6 +34,9 @@ rm -rf %{buildroot}
 %doc LICENSE
 
 %changelog
+* Mon Apr 10 2017 Edoardo Spadoni <edoardo.spadoni@nethesis.it> - 1.0.5-1
+Fix RAID alert. Nethesis/dev#5099
+
 * Fri Mar 24 2017 Giacomo Sanchietti <giacomo.sanchietti@nethesis.it> - 1.0.4-1
 - Add "ardad --send" alias - Nethesis/dev#5087
 
