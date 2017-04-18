@@ -28,6 +28,13 @@ else
   severity="failure"
 fi
 
+# reset only when state move from unknow to down to avoid false reset.
+# if an up state comes after a down state (for each wan), all alerts will be erased.
+# check only the down state to trigger failed status
+if [ ${PREVSTATE} = 'unknown' ] && [ ${STATE} = 'down' ] ; then
+    echo -e "PUTNOTIF host=$hostname plugin=wan plugin_instance=wan_reset type=down severity=failure time=$TIMESTAMP message=\"$NAME is $STATE\"\n" | nc -U /var/run/collectd.sock &>/dev/null
+fi
+
 echo -e "PUTNOTIF host=$hostname plugin=wan plugin_instance=$NAME type=down severity=$severity time=$TIMESTAMP message=\"$NAME is $STATE\"\n" | nc -U /var/run/collectd.sock &>/dev/null
 
 exit 0;
