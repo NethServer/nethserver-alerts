@@ -1,6 +1,6 @@
 Summary: NethServer alerts
 Name: nethserver-alerts
-Version: 0.1.1
+Version: 0.1.2
 Release: 1%{?dist}
 License: GPL
 Source0: %{name}-%{version}.tar.gz
@@ -53,6 +53,10 @@ rm -rf %{buildroot}
 %doc LICENSE
 
 %changelog
+* Fri Apr 21 2017 Edoardo Spadoni <edoardo.spadoni@nethesis.it> - 0.1.2-1
+- Fix bad wan alert. Nethesis/dev#5100
+- Db migration. Remove ardad key. Nethesis/dev#5087
+
 * Mon Apr 10 2017 Edoardo Spadoni <edoardo.spadoni@nethesis.it> - 0.1.1-1
 Fix RAID alert. Nethesis/dev#5099
 
