@@ -61,3 +61,26 @@
         </Type>
     </Plugin>
 
+    <Plugin "ping">
+{
+    use esmith::NetworksDB;
+    my $hosts = $collectd{'PingHosts'} || '';
+    my $dropRate = $collectd{'DropRatePercent'} || '';
+    my $dns = $dns{'NameServers'} || '';
+
+    foreach (split(/,/,$hosts)) {
+        $OUT .= "        <Type \"ping_droprate\">\n";
+        $OUT .= "            Instance \"$_\"\n";
+        $OUT .= "            FailureMax ".($dropRate/100)."\n";
+        $OUT .= "        </Type>\n";
+    }
+    if ($dns ne '') {
+        my @ns = split(/,/,$dns);
+        $OUT .= "        <Type \"ping_droprate\">\n";
+        $OUT .= "            Instance \"$ns[0]\"\n";
+        $OUT .= "            FailureMax ".($dropRate/100)."\n";
+        $OUT .= "        </Type>";
+    }
+}
+    </Plugin>
+
