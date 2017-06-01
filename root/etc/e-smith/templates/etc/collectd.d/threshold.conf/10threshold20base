@@ -84,3 +84,10 @@
 }
     </Plugin>
 
+    <Plugin "nut-ups">
+        <Type "voltage">
+            Instance "input"
+            FailureMax 10
+        </Type>
+    </Plugin>
+
