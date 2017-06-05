@@ -1,0 +1,17 @@
+#
+# lsm Plugin
+#
+{
+    my $plugin = 'lsm';
+    foreach my $key ($alertsdb->get_all_by_prop('type' => $plugin)) {
+        my $TypeInstance = $key->prop('TypeInstance') || 'down';
+        my $FailureMax = $key->prop('FailureMax') || '0.1';
+    
+        $OUT.="    <Plugin \"$plugin\">\n";
+        $OUT.="        <Type \"count\">\n";
+        $OUT.="            Instance \"$TypeInstance\"\n";
+        $OUT.="            FailureMax $FailureMax\n";
+        $OUT.="        </Type>\n";
+        $OUT.="    </Plugin>\n";
+    }
+}

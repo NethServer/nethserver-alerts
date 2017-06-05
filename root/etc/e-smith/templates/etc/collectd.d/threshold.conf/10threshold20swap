@@ -1,0 +1,19 @@
+#
+# Swap Plugin
+#
+{
+    my $plugin = 'swap';
+    foreach my $key ($alertsdb->get_all_by_prop('type' => $plugin)) {
+        my $TypeInstance = $key->prop('TypeInstance') || 'free';
+        my $FailureMin = $key->prop('FailureMin') || '10';
+        my $Hysteresis = $key->prop('Hysteresis') || '1';
+    
+        $OUT.="    <Plugin \"$plugin\">\n";
+        $OUT.="        <Type \"percent\">\n";
+        $OUT.="            Instance \"$TypeInstance\"\n";
+        $OUT.="            FailureMin $FailureMin\n";
+        $OUT.="            Hysteresis $Hysteresis\n";
+        $OUT.="        </Type>\n";
+        $OUT.="    </Plugin>\n";
+    }
+}

@@ -1,0 +1,23 @@
+#
+# Load Plugin
+#
+{
+    my $plugin = 'load';
+    foreach my $key ($alertsdb->get_all_by_prop('type' => $plugin)) {
+        my $DataSource = $key->prop('DataSource') || 'midterm';
+        my $WarningMax = $key->prop('WarningMax') || '5';
+        my $FailureMax = $key->prop('FailureMax') || '10';
+        my $Hits = $key->prop('Hits') || '3';
+        my $Hysteresis = $key->prop('Hysteresis') || '3';
+    
+        $OUT.="    <Plugin \"$plugin\">\n";
+        $OUT.="        <Type \"load\">\n";
+        $OUT.="            DataSource \"$DataSource\"\n";
+        $OUT.="            WarningMax $WarningMax\n";
+        $OUT.="            FailureMax $FailureMax\n";
+        $OUT.="            Hits $Hits\n";
+        $OUT.="            Hysteresis $Hysteresis\n";
+        $OUT.="        </Type>\n";
+        $OUT.="    </Plugin>\n";
+    }
+}

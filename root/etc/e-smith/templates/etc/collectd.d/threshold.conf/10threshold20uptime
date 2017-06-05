@@ -1,0 +1,15 @@
+#
+# Uptime Plugin
+#
+{
+    my $plugin = 'uptime';
+    foreach my $key ($alertsdb->get_all_by_prop('type' => $plugin)) {
+        my $FailureMin = $key->prop('FailureMin') || '600';
+    
+        $OUT.="    <Plugin \"$plugin\">\n";
+        $OUT.="        <Type \"$plugin\">\n";
+        $OUT.="            FailureMin $FailureMin\n";
+        $OUT.="        </Type>\n";
+        $OUT.="    </Plugin>\n";
+    }
+}

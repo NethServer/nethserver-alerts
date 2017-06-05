@@ -1,0 +1,20 @@
+#
+# NUT UPS Plugin
+#
+{
+    my $plugin = 'nut-ups';
+    foreach my $key ($alertsdb->get_all_by_prop('type' => $plugin)) {
+        my $Instance = $key->prop('Instance') || ${SystemName} . '.' . ${DomainName};
+        my $PluginType = $key->prop('PluginType') || 'voltage';
+        my $TypeInstance = $key->prop('TypeInstance') || 'input';
+        my $FailureMin = $key->prop('FailureMin') || '300';
+    
+        $OUT.="    <Plugin \"$plugin\">\n";
+        $OUT.="        Instance \"$Instance\">\n";
+        $OUT.="        <Type \"$PluginType\">\n";
+        $OUT.="            Instance \"$TypeInstance\"\n";
+        $OUT.="            FailureMin $FailureMin\n";
+        $OUT.="        </Type>\n";
+        $OUT.="    </Plugin>\n";
+    }
+}
