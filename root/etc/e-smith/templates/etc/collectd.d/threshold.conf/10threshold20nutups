@@ -11,7 +11,7 @@
             my $FailureMin = $key->prop('FailureMin') || '300';
     
             $OUT .= "    <Plugin \"$plugin\">\n";
-            $OUT .= "        Instance \"$Instance\">\n";
+            $OUT .= "        Instance \"$Instance\"\n";
             $OUT .= "        <Type \"$PluginType\">\n";
             $OUT .= "            Instance \"$TypeInstance\"\n";
             $OUT .= "            FailureMin $FailureMin\n";
@@ -21,7 +21,7 @@
     } else {
         # Default values to use if alerts db doesn't exist
         $OUT .= "    <Plugin \"nut-ups\">\n";
-        $OUT .= "        Instance \"".${SystemName} . '.' . ${DomainName}."\">\n";
+        $OUT .= "        Instance \"".${SystemName} . '.' . ${DomainName}."\"\n";
         $OUT .= "        <Type \"voltage\">\n";
         $OUT .= "            Instance \"input\"\n";
         $OUT .= "            FailureMin 300\n";
