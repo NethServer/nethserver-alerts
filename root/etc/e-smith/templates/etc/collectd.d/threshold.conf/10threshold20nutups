@@ -19,6 +19,7 @@
             $OUT .= "    </Plugin>\n";
         }
     } else {
+        # Default values to use if alerts db doesn't exist
         $OUT .= "    <Plugin \"nut-ups\">\n";
         $OUT .= "        Instance \"".${SystemName} . '.' . ${DomainName}."\">\n";
         $OUT .= "        <Type \"voltage\">\n";

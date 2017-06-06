@@ -16,6 +16,7 @@
             $OUT .= "    </Plugin>\n";
         }
     } else {
+        # Default values to use if alerts db doesn't exist
         $OUT .= "    <Plugin \"md\">\n";
         $OUT .= "        <Type \"md_disks\">\n";
         $OUT .= "            Instance \"failed\"\n";

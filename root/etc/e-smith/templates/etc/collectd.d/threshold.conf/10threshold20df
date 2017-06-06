@@ -20,6 +20,7 @@
             $OUT .= "    </Plugin>\n";
         }
     } else {
+        # Default values to use if alerts db doesn't exist
         $OUT .= "    <Plugin \"df\">\n";
         $OUT .= "        Instance \"boot\"\n";
         $OUT .= "        <Type \"percent_bytes\">\n";

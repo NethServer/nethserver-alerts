@@ -18,6 +18,7 @@
             $OUT .= "    </Plugin>\n";
         }
     } else {
+        # Default values to use if alerts db doesn't exist
         $OUT .= "    <Plugin \"swap\">\n";
         $OUT .= "        <Type \"percent\">\n";
         $OUT .= "            Instance \"free\"\n";

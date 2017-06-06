@@ -14,6 +14,7 @@
             $OUT .= "    </Plugin>\n";
         }
     } else {
+        # Default values to use if alerts db doesn't exist
         $OUT .= "    <Plugin \"uptime\">\n";
         $OUT .= "        <Type \"uptime\">\n";
         $OUT .= "            FailureMin 600\n";

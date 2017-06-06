@@ -22,6 +22,7 @@
             $OUT .= "    </Plugin>\n";
         }
     } else {
+        # Default values to use if alerts db doesn't exist
         $OUT .= "    <Plugin \"load\">\n";
         $OUT .= "        <Type \"load\">\n";
         $OUT .= "            DataSource \"midterm\"\n";
