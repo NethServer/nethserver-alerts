@@ -1,9 +1,14 @@
-{
-    use esmith::ConfigDB;
-    our $alertsdb = esmith::ConfigDB->open_ro('alerts') || die("Could not open alerts DB!");
-    $OUT='';
-}
 LoadPlugin threshold
 
 <Plugin "threshold">
+{
+    use esmith::ConfigDB;
+    our $alertsdb = esmith::ConfigDB->open_ro('alerts');
+    $OUT='';
 
+    if (! $alertsdb) {
+        $OUT='# WARNING: no alerts db found! Using default configuration.';
+    } else {
+        $OUT='';
+    }
+}
