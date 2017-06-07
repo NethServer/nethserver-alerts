@@ -1,0 +1,14 @@
+#!/bin/bash
+
+SYSTEMID=$(/sbin/e-smith/config getprop nethupdate SystemID)
+
+# TODO get new alertsdb using curl
+ALERTSDBJSON='[{"props":{"Hysteresis":"3","DataSource":"midterm","FailureMax":"10","WarningMax":"5"},"name":"1","type":"load"},{"props":{"TypeInstance":"input","Instance":"73.nethest.xxx","FailureMin":"300","PluginType":"voltage"},"name":"11","type":"nut-ups"},{"props":{"TypeInstance":"free","Hysteresis":"2","Instance":"boot","FailureMin":"15"},"name":"2","type":"df"},{"props":{"TypeInstance":"free","Hysteresis":"2","Instance":"root","FailureMin":"15"},"name":"3","type":"df"},{"props":{"TypeInstance":"free","Hysteresis":"1","FailureMin":"10"},"name":"4","type":"swap"},{"props":{"FailureMin":"600"},"name":"5","type":"uptime"},{"props":{"TypeInstance":"failed","FailureMax":"0.1"},"name":"6","type":"md"},{"props":{"TypeInstance":"missing","FailureMax":"0.1"},"name":"7","type":"md"},{"props":{"TypeInstance":"down","FailureMax":"1.0"},"name":"8","type":"lsm"}]'
+##################################
+
+if [[ ! -z $ALERTSDBJSON ]] ; then
+    # Clean old alerts db
+    /sbin/e-smith/db alerts show | grep '^[0-9]*=.*$' | cut -d= -f1 | xargs -I SUB /sbin/e-smith/db alerts delete SUB
+    # Use JSON to create again alerts db
+    /sbin/e-smith/db alerts setjson "$ALERTSDBJSON"
+fi
