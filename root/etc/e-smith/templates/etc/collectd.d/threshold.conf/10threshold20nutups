@@ -1,31 +1,10 @@
 #
 # NUT UPS Plugin
 #
-{
-    my $plugin = 'nut-ups';
-    if ($alertsdb) {
-        foreach my $key ($alertsdb->get_all_by_prop('type' => $plugin)) {
-            my $Instance = $key->prop('Instance') || ${SystemName} . '.' . ${DomainName};
-            my $PluginType = $key->prop('PluginType') || 'voltage';
-            my $TypeInstance = $key->prop('TypeInstance') || 'input';
-            my $FailureMin = $key->prop('FailureMin') || '300';
-    
-            $OUT .= "    <Plugin \"$plugin\">\n";
-            $OUT .= "        Instance \"$Instance\"\n";
-            $OUT .= "        <Type \"$PluginType\">\n";
-            $OUT .= "            Instance \"$TypeInstance\"\n";
-            $OUT .= "            FailureMin $FailureMin\n";
-            $OUT .= "        </Type>\n";
-            $OUT .= "    </Plugin>\n";
-        }
-    } else {
-        # Default values to use if alerts db doesn't exist
-        $OUT .= "    <Plugin \"nut-ups\">\n";
-        $OUT .= "        Instance \"".${SystemName} . '.' . ${DomainName}."\"\n";
-        $OUT .= "        <Type \"voltage\">\n";
-        $OUT .= "            Instance \"input\"\n";
-        $OUT .= "            FailureMin 300\n";
-        $OUT .= "        </Type>\n";
-        $OUT .= "    </Plugin>\n";
-    }
-}
+    <Plugin "nut-ups">
+        Instance "{${SystemName}}.{${DomainName}}"
+        <Type "voltage">
+            Instance "input"
+            FailureMin 300
+        </Type>
+    </Plugin>
