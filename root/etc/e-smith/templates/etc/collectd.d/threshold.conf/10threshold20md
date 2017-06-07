@@ -1,33 +1,15 @@
 #
 # md Plugin
 #
-{
-    my $plugin = 'md';
-    if ($alertsdb) {
-        foreach my $key ($alertsdb->get_all_by_prop('type' => $plugin)) {
-            my $TypeInstance = $key->prop('TypeInstance') || next;
-            my $FailureMax = $key->prop('FailureMax') || '0.1';
-    
-            $OUT .= "    <Plugin \"$plugin\">\n";
-            $OUT .= "        <Type \"md_disks\">\n";
-            $OUT .= "            Instance \"$TypeInstance\"\n";
-            $OUT .= "            FailureMax $FailureMax\n";
-            $OUT .= "        </Type>\n";
-            $OUT .= "    </Plugin>\n";
-        }
-    } else {
-        # Default values to use if alerts db doesn't exist
-        $OUT .= "    <Plugin \"md\">\n";
-        $OUT .= "        <Type \"md_disks\">\n";
-        $OUT .= "            Instance \"failed\"\n";
-        $OUT .= "            FailureMax 0.1\n";
-        $OUT .= "        </Type>\n";
-        $OUT .= "    </Plugin>\n";
-        $OUT .= "    <Plugin \"md\">\n";
-        $OUT .= "        <Type \"md_disks\">\n";
-        $OUT .= "            Instance \"missing\"\n";
-        $OUT .= "            FailureMax 0.1\n";
-        $OUT .= "        </Type>\n";
-        $OUT .= "    </Plugin>\n";
-    }
-}
+    <Plugin "md">
+        <Type "md_disks">
+            Instance "failed"
+            FailureMax 0.1
+        </Type>
+    </Plugin>
+    <Plugin "md">
+    <Type "md_disks">
+            Instance "missing"
+            FailureMax 0.1
+        </Type>
+    </Plugin>
