@@ -3,7 +3,6 @@
 #
 {
     my $plugin = 'ping';
-    my $count = 0;
     if ($alertsdb) {
         foreach my $key ($alertsdb->get_all_by_prop('type' => $plugin)) {
             my $PluginType = $key->prop('PluginType') || next;
@@ -23,28 +22,6 @@
             $OUT .= "            FailureMax $FailureMax\n";
             $OUT .= "        </Type>\n";
             $OUT .= "    </Plugin>\n";
-            $count += 1;
-        }
-    }
-    if ($count == 0) {
-        # Default values to use if alerts db doesn't exist or instances aren't configured
-        use esmith::NetworksDB;
-        my $dns = $dns{'NameServers'} || '';
-        if ($dns ne '') {
-            foreach my $ns (split(/,/,$dns)) {
-                $OUT .= "    <Plugin \"$plugin\">\n";
-                $OUT .= "        <Type \"ping_droprate\">\n";
-                $OUT .= "            Instance \"$ns\"\n";
-                $OUT .= "            FailureMax 0.1\n";
-                $OUT .= "        </Type>\n";
-                $OUT .= "    </Plugin>\n";
-                $OUT .= "    <Plugin \"$plugin\">\n";
-                $OUT .= "        <Type \"ping\">\n";
-                $OUT .= "            Instance \"$ns\"\n";
-                $OUT .= "            FailureMax 200\n";
-                $OUT .= "        </Type>\n";
-                $OUT .= "    </Plugin>\n";
-            }
         }
     }
 }
