@@ -38,7 +38,7 @@ class Refresh extends \Nethgui\Controller\Table\AbstractAction
     {
         parent::prepareView($view);
         if($this->getRequest()->isValidated()) {
-            $this->getPlatform()->signalEvent('nethserver-alerts-update');
+            $this->getPlatform()->signalEvent('nethserver-alerts-save');
             $view->getCommandList()->sendQuery($view->getModuleUrl('/Alerts/read'));
         }
     }

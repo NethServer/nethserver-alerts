@@ -40,7 +40,6 @@ event_templates('nethserver-collectd-update', qw(
 
 event_actions('nethserver-alerts-update', qw(
     initialize-default-databases        00
-    nethserver-alerts-update-alertsdb   40
 ));
 
 event_actions('interface-update', qw(
@@ -57,5 +56,25 @@ event_services('nethserver-register-save', qw(
 
 event_actions('wan-uplink-update', qw(
     nethserver-alerts-lsm-update 60
+));
+
+#
+# nethserver-alerts-save event
+#
+
+event_templates('nethserver-alerts-save', qw(
+   /etc/collectd.d/threshold.conf
+   /etc/collectd.d/filter.conf
+   /etc/collectd.d/ping.conf
+   /etc/cron.daily/nethserver-alerts
+));
+
+event_services('nethserver-alerts-save', qw(
+    collectd restart
+));
+
+event_actions('nethserver-alerts-save', qw(
+    initialize-default-databases        00
+    nethserver-alerts-update-alertsdb   40
 ));
 
