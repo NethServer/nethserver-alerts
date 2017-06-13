@@ -17,6 +17,7 @@ event_templates('nethserver-alerts-update', qw(
    /etc/collectd.d/threshold.conf
    /etc/collectd.d/filter.conf
    /etc/collectd.d/ping.conf
+   /etc/cron.daily/nethserver-alerts
 ));
 
 event_templates('nethserver-backup-data-update', qw(
