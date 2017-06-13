@@ -8,4 +8,4 @@ echo $view->panel()
 
 ;
 
-echo $view->buttonList($view::BUTTON_SUBMIT | $view::BUTTON_HELP);
+echo $view->buttonList($view::BUTTON_SUBMIT);
