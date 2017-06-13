@@ -1,0 +1,16 @@
+#!/bin/bash
+#
+# Copyright (C) 2015 Nethesis S.r.l.
+# http://www.nethesis.it - support@nethesis.it
+#
+# This script is part of NethServer Enterprise
+# All rights are reserved
+#
+
+timestamp=$(date +%s)
+hostname=$(hostname)
+
+# execute this every time the event 'interface-update' is fired
+echo -e "PUTNOTIF host=$hostname plugin=wan plugin_instance=wan_reset type=down severity=failure time=$timestamp message=\"wan reset\"\n" | nc -U /var/run/collectd.sock &>/dev/null
+
+exit 0;

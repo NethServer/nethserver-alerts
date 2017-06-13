@@ -43,6 +43,10 @@ event_actions('nethserver-alerts-update', qw(
     nethserver-alerts-update-alertsdb   40
 ));
 
+event_actions('interface-update', qw(
+    nethserver-alerts-reset-wan   03
+));
+
 event_services('nethserver-alerts-update', qw(
     collectd restart
 ));
