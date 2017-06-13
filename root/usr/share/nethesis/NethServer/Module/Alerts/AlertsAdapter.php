@@ -65,16 +65,14 @@ class AlertsAdapter extends \Nethgui\Adapter\LazyLoaderAdapter
                $instance = $alert['TypeInstance'];
             }
 
-            
-            if (isset($alert['FailureMax'])) {
-                $threshold = $alert['FailureMax'];
-            } else if (isset($alert['FailureMin'])) {
-                $threshold = $alert['FailureMin'];
-            }
             $row = array(
                 'Type' => $type,
                 'Instance' => $instance,
                 'Threshold' => $threshold,
+                'FailureMax' => isset($alert['FailureMax']) ? $alert['FailureMax'] : '-',
+                'FailureMin' => isset($alert['FailureMin']) ? $alert['FailureMin'] : '-',
+                'WarningMax' => isset($alert['WarningMax']) ? $alert['WarningMax'] : '-',
+                'WarningMin' => isset($alert['WarningMin']) ? $alert['WarningMin'] : '-',
             );
 
             $data[$key] = $row;

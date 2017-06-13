@@ -56,7 +56,6 @@ class Alerts extends \Nethgui\Controller\TableController
 
     public function prepareViewForColumnInstance(\Nethgui\Controller\Table\Read $action, \Nethgui\View\ViewInterface $view, $key, $values, &$rowMetadata)
     {
-        $instance = $values['Threshold'];
         switch ($values['Type']) {
             case "df":
                return $view->translate("Partition_label").": /".$values['Instance'];
@@ -72,17 +71,18 @@ class Alerts extends \Nethgui\Controller\TableController
 
     public function prepareViewForColumnThreshold(\Nethgui\Controller\Table\Read $action, \Nethgui\View\ViewInterface $view, $key, $values, &$rowMetadata)
     {
-        $threshold = $values['Threshold'];
         switch ($values['Type']) {
+            case 'load':
+                 return $view->translate("max_fail_label").": ".$values['FailureMax'].", ".$view->translate("max_warn_label").": ".$values['WarningMax'];
             case "df":
             case "swap":
-               return $values['Threshold']." %";
+               return  $view->translate("min_fail_label").": ".$values['FailureMin']." %";
             case "ping_droprate":
-               return  ( $values['Threshold']*100 )." %";
+               return  $view->translate("max_fail_label").": ".( $values['FailureMax']*100 )." %";
             case "ping":
-               return $values['Threshold']." ms";
+               return $view->translate("max_fail_label").": ".$values['FailureMax']." ms";
             default:
-               return $values['Threshold'];
+               return '-';
         }
     }
 
