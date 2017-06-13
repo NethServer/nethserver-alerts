@@ -1,0 +1,9 @@
+#
+# lsm Plugin
+#
+    <Plugin "lsm">
+        <Type "count">
+            Instance "down"
+            FailureMax 1.0
+        </Type>
+    </Plugin>

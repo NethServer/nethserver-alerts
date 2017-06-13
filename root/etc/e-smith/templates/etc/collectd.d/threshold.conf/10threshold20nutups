@@ -1,0 +1,10 @@
+#
+# NUT UPS Plugin
+#
+    <Plugin "nut-ups">
+        Instance "{${SystemName}}.{${DomainName}}"
+        <Type "voltage">
+            Instance "input"
+            FailureMin 300
+        </Type>
+    </Plugin>

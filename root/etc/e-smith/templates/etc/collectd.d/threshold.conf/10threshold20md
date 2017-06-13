@@ -1,0 +1,15 @@
+#
+# md Plugin
+#
+    <Plugin "md">
+        <Type "md_disks">
+            Instance "failed"
+            FailureMax 0.1
+        </Type>
+    </Plugin>
+    <Plugin "md">
+    <Type "md_disks">
+            Instance "missing"
+            FailureMax 0.1
+        </Type>
+    </Plugin>

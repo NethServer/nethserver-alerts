@@ -1,0 +1,52 @@
+#!/bin/bash
+
+SYSTEMID=$(/sbin/e-smith/config getprop nethupdate SystemID)
+
+ALERTSDBJSON=$(/usr/bin/curl -s "https://my.nethesis.it/api/customalerts/configuration?system_key=$SYSTEMID")
+RES1=$?
+
+if [[ $RES1 == 0 ]] ; then
+    # Clean old alerts db
+    > /var/lib/nethserver/db/alerts
+
+    # Use JSON to create again alerts db
+    /sbin/e-smith/db alerts setjson "$ALERTSDBJSON"
+    RES2=$?
+
+    # Set ping hosts to collectd config
+    /usr/bin/perl <<EOF
+
+use esmith::ConfigDB;
+use JSON;
+
+my \$cdb = esmith::ConfigDB->open();
+
+my %pinghosts;
+
+foreach my \$host (split(/,/,\$cdb->get_prop('collectd','PingHosts'))) {
+    \$pinghosts{\$host} = '';
+}
+
+my \$alerts = decode_json('$ALERTSDBJSON');
+
+for my \$index (keys(@\$alerts)) {
+    my \$key = @\$alerts[\$index];
+    my \$type = @\$key{'type'};
+    my \$props = @\$key{'props'};
+    my \$Instance = @\$props{'Instance'};
+    if (\$type eq 'ping' ) {
+        \$pinghosts{\$Instance} = '';
+    }
+}
+
+\$cdb->set_prop('collectd', 'PingHosts', join (',',keys(%pinghosts)));
+
+EOF
+
+fi
+
+if [[ $RES1 == 0 && $RES2 == 0 ]]; then
+    exit 0
+else
+    exit 1
+fi

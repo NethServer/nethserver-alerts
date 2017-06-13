@@ -16,6 +16,8 @@ use esmith::Build::CreateLinks qw(:all);
 event_templates('nethserver-alerts-update', qw(
    /etc/collectd.d/threshold.conf
    /etc/collectd.d/filter.conf
+   /etc/collectd.d/ping.conf
+   /etc/cron.daily/nethserver-alerts
 ));
 
 event_templates('nethserver-backup-data-update', qw(
@@ -41,6 +43,10 @@ event_actions('nethserver-alerts-update', qw(
     initialize-default-databases        00
 ));
 
+event_actions('interface-update', qw(
+    nethserver-alerts-reset-wan   03
+));
+
 event_services('nethserver-alerts-update', qw(
     collectd restart
 ));
@@ -51,5 +57,24 @@ event_services('nethserver-register-save', qw(
 
 event_actions('wan-uplink-update', qw(
     nethserver-alerts-lsm-update 60
+));
+
+#
+# nethserver-alerts-save event
+#
+
+event_templates('nethserver-alerts-save', qw(
+   /etc/collectd.d/threshold.conf
+   /etc/collectd.d/filter.conf
+   /etc/collectd.d/ping.conf
+   /etc/cron.daily/nethserver-alerts
+));
+
+event_services('nethserver-alerts-save', qw(
+    collectd restart
+));
+
+event_actions('nethserver-alerts-save', qw(
+    nethserver-alerts-update-alertsdb   40
 ));
 
