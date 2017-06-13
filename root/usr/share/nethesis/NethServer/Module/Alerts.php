@@ -49,7 +49,6 @@ class Alerts extends \Nethgui\Controller\TableController
             ->setColumns($columns)
             ->addTableAction(new Alerts\Refresh())
             ->addTableAction(new Alerts\Configure())
-            ->addTableAction(new \Nethgui\Controller\Table\Help('Help'))
         ;
 
         parent::initialize();
@@ -99,8 +98,11 @@ class Alerts extends \Nethgui\Controller\TableController
         parent::prepareView($view);
         if (isset($view['read'])) {
             $view['read']->setTemplate('NethServer\Template\Alerts');
-            $stats = stat('/var/lib/nethserver/db/alerts');
-            $view['read']['updated'] = date("D M j G:i:s T Y",$stats[9]);
+            $view['read']['updated'] = '-';
+            if ( file_exists('/var/lib/nethserver/db/alerts') ) {
+                $stats = stat('/var/lib/nethserver/db/alerts');
+                $view['read']['updated'] = date("D M j G:i:s T Y",$stats[9]);
+            }
         }
     }
 }
