@@ -2,5 +2,6 @@
 
 echo $view->header('Alerts')->setAttribute('template', $T('Alerts_header'));
 
-echo $view->buttonList($view::BUTTON_HELP)
-    ->insert($view->button('Update_Alerts', $view::BUTTON_SUBMIT));
+echo "<div style='float: right'>".$T('last_update_label').": ".$view['updated']."</div>";
+
+require __DIR__ . '/../../Nethgui/Template/Table/Read.php';
