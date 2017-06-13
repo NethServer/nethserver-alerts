@@ -49,6 +49,7 @@ class Alerts extends \Nethgui\Controller\TableController
             ->setColumns($columns)
             ->addTableAction(new Alerts\Refresh())
             ->addTableAction(new Alerts\Configure())
+            ->addTableAction(new \Nethgui\Controller\Table\Help('Help'))
         ;
 
         parent::initialize();
