@@ -7,21 +7,45 @@ RES1=$?
 
 if [[ $RES1 == 0 ]] ; then
     # Clean old alerts db
-    /sbin/e-smith/db alerts show | grep '^[0-9]*=.*$' | cut -d= -f1 | xargs -I SUB /sbin/e-smith/db alerts delete SUB
-    RES2=$?
+    > /var/lib/nethserver/db/alerts
 
     # Use JSON to create again alerts db
     /sbin/e-smith/db alerts setjson "$ALERTSDBJSON"
-    RES3=$?
+    RES2=$?
 
     # Set ping hosts to collectd config
-    for PINGHOST in $(/sbin/e-smith/db alerts show | grep '^[0-9]*=ping$' | cut -d= -f1 | xargs -I SUB /sbin/e-smith/db alerts getprop SUB Instance | sort -u) ; do
-        PINGHOSTS="$PINGHOSTS,$PINGHOST"
-    done
-    /sbin/e-smith/db configuration setprop collectd PingHosts "$(echo $PINGHOSTS | sed 's/^,//')"
+    /usr/bin/perl <<EOF
+
+use esmith::ConfigDB;
+use JSON;
+
+my \$cdb = esmith::ConfigDB->open();
+
+my %pinghosts;
+
+foreach my \$host (split(/,/,\$cdb->get_prop('collectd','PingHosts'))) {
+    \$pinghosts{\$host} = '';
+}
+
+my \$alerts = decode_json('$ALERTSDBJSON');
+
+for my \$index (keys(@\$alerts)) {
+    my \$key = @\$alerts[\$index];
+    my \$type = @\$key{'type'};
+    my \$props = @\$key{'props'};
+    my \$Instance = @\$props{'Instance'};
+    if (\$type eq 'ping' ) {
+        \$pinghosts{\$Instance} = '';
+    }
+}
+
+\$cdb->set_prop('collectd', 'PingHosts', join (',',keys(%pinghosts)));
+
+EOF
+
 fi
 
-if [[ $RES1 == 0 && $RES2 == 0 && $RES3 == 0 ]]; then
+if [[ $RES1 == 0 && $RES2 == 0 ]]; then
     exit 0
 else
     exit 1
