@@ -3,13 +3,14 @@
 #
 {
     my $plugin = 'df';
+    my $count = 0;
     if ($alertsdb) {
         foreach my $key ($alertsdb->get_all_by_prop('type' => $plugin)) {
             my $Instance = $key->prop('Instance') || next;
             my $TypeInstance = $key->prop('TypeInstance') || 'free';
             my $FailureMin = $key->prop('FailureMin') || '15';
             my $Hysteresis = $key->prop('Hysteresis') || '2';
-    
+
             $OUT .= "    <Plugin \"$plugin\">\n";
             $OUT .= "        Instance \"$Instance\"\n";
             $OUT .= "        <Type \"percent_bytes\">\n";
@@ -18,8 +19,10 @@
             $OUT .= "            Hysteresis $Hysteresis\n";
             $OUT .= "        </Type>\n";
             $OUT .= "    </Plugin>\n";
+            $count ++;
         }
-    } else {
+    }
+    if ($count == 0) {
         # Default values to use if alerts db doesn't exist
         $OUT .= "    <Plugin \"df\">\n";
         $OUT .= "        Instance \"boot\"\n";

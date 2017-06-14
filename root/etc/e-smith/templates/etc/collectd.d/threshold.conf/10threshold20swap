@@ -3,6 +3,7 @@
 #
 {
     my $plugin = 'swap';
+    my $count = 0;
     if ($alertsdb) {
         foreach my $key ($alertsdb->get_all_by_prop('type' => $plugin)) {
             my $TypeInstance = $key->prop('TypeInstance') || 'free';
@@ -16,8 +17,10 @@
             $OUT .= "            Hysteresis $Hysteresis\n";
             $OUT .= "        </Type>\n";
             $OUT .= "    </Plugin>\n";
+            $count ++;
         }
-    } else {
+    }
+    if ($count == 0) {
         # Default values to use if alerts db doesn't exist
         $OUT .= "    <Plugin \"swap\">\n";
         $OUT .= "        <Type \"percent\">\n";
