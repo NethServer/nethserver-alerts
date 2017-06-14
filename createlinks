@@ -75,6 +75,6 @@ event_services('nethserver-alerts-save', qw(
 ));
 
 event_actions('nethserver-alerts-save', qw(
-    nethserver-alerts-update-alertsdb   40
+    nethserver-alerts-update-alertsdb   02
 ));
 
