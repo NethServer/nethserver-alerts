@@ -7,7 +7,7 @@ Source0: %{name}-%{version}.tar.gz
 BuildArch: noarch
 Requires: nethserver-collectd
 Requires: python-requests
-Requires: nethserver-lib > 2.2.3-1
+Requires: nethserver-lib >= 2.2.4-1
 Requires: curl
 BuildRequires: nethserver-devtools
 BuildRequires: gettext
