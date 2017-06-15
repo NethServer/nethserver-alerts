@@ -8,6 +8,7 @@
             my $PluginType = $key->prop('PluginType') || next;
             my $Instance = $key->prop('Instance') || next;
             my $FailureMax = $key->prop('FailureMax') || '';
+            my $Interesting = $key->prop('Interesting') || 'false';
             if ($FailureMax eq '') {
                 if ($PluginType eq 'ping') {
                     $FailureMax = '200';
@@ -22,6 +23,7 @@
             $OUT .= "            FailureMax $FailureMax\n";
             $OUT .= "            Hits 30\n";
             $OUT .= "            Hysteresis 30\n";
+            $OUT .= "            Interesting $Interesting\n";
             $OUT .= "        </Type>\n";
             $OUT .= "    </Plugin>\n";
         }
