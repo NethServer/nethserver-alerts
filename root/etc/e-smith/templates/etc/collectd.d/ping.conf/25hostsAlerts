@@ -1,0 +1,14 @@
+{
+    my $alertsdb = esmith::ConfigDB->open_ro('alerts');
+    $OUT = "";
+    if ($alertsdb) {
+        my $keys = $alertsdb->get_all_by_prop('type' => 'ping');
+        if ($keys) {
+            $OUT .= "<Plugin \"ping\">\n";
+            foreach my $key ($alertsdb->get_all_by_prop('type' => 'ping')) {
+                $OUT .= "    Host \"".$key->prop('Instance')."\"\n";
+            }
+            $OUT .= "</Plugin>\n";
+        }
+    }
+}
