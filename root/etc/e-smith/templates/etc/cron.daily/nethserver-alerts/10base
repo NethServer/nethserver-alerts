@@ -1,8 +1,0 @@
-# Update nethserver-alerts alert db
-{
-    if (${nethupdate{AlertsAutoUpdates}} eq 'enabled') {
-        $OUT = '/sbin/e-smith/signal-event nethserver-alerts-save';
-    } else {
-        $OUT = '# Custom alerts automatic update disabled';
-    }
-}
