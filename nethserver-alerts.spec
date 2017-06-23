@@ -1,6 +1,6 @@
 Summary: NethServer alerts
 Name: nethserver-alerts
-Version: 1.0.6
+Version: 1.1.0
 Release: 1%{?dist}
 License: GPL
 Source0: %{name}-%{version}.tar.gz
@@ -36,6 +36,9 @@ rm -rf %{buildroot}
 %doc LICENSE
 
 %changelog
+* Fri Jun 23 2017 Giacomo Sanchietti <giacomo.sanchietti@nethesis.it> - 1.1.0-1
+- Customized alerts from my.nethesis.it - Nethesis/dev#5154
+
 * Fri Apr 21 2017 Edoardo Spadoni <edoardo.spadoni@nethesis.it> - 1.0.6-1
 Fix bad wan alert. Nethesis/dev#5100
 
