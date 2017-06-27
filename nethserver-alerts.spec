@@ -1,6 +1,6 @@
 Summary: NethServer alerts
 Name: nethserver-alerts
-Version: 1.1.0
+Version: 1.1.1
 Release: 1%{?dist}
 License: GPL
 Source0: %{name}-%{version}.tar.gz
@@ -36,6 +36,9 @@ rm -rf %{buildroot}
 %doc LICENSE
 
 %changelog
+* Tue Jun 27 2017 Giacomo Sanchietti <giacomo.sanchietti@nethesis.it> - 1.1.1-1
+- Fix Italian translation
+
 * Fri Jun 23 2017 Giacomo Sanchietti <giacomo.sanchietti@nethesis.it> - 1.1.0-1
 - Customized alerts from my.nethesis.it - Nethesis/dev#5154
 
