@@ -6,12 +6,19 @@ ALERTSDBJSON=$(/usr/bin/curl -s "https://my.nethesis.it/api/customalerts/configu
 RES1=$?
 
 if [[ $RES1 == 0 ]] ; then
-    # Clean old alerts db
-    > /var/lib/nethserver/db/alerts
-
-    # Use JSON to create again alerts db
-    /sbin/e-smith/db alerts setjson "$ALERTSDBJSON"
+    # create temp db file
+    TMPDB=$(mktemp)
+    /sbin/e-smith/db $TMPDB setjson "$ALERTSDBJSON"
     RES2=$?
+
+    # compare temp db file with alerts db
+    if [[ $(/sbin/e-smith/db $TMPDB show | md5sum | awk '{print $1}') != $(/sbin/e-smith/db alerts show | md5sum | awk '{print $1}') ]] ; then
+        # temp db differs from alerts db
+        mv $TMPDB /var/lib/nethserver/db/alerts
+    else
+        # db isn't changed
+        rm $TMPDB
+    fi
 fi
 
 if [[ $RES1 == 0 && $RES2 == 0 ]]; then
