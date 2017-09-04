@@ -14,6 +14,7 @@ if [[ $RES1 == 0 ]] ; then
     # compare temp db file with alerts db
     if [[ $(/sbin/e-smith/db $TMPDB show | md5sum) != $(/sbin/e-smith/db alerts show | md5sum) ]] ; then
         # temp db differs from alerts db
+        /usr/bin/chown root:adm $TMPDB
         mv $TMPDB /var/lib/nethserver/db/alerts
     else
         # db isn't changed
