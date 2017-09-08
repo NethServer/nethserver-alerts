@@ -2,7 +2,7 @@
 
 SYSTEMID=$(/sbin/e-smith/config getprop nethupdate SystemID)
 
-ALERTSDBJSON=$(/usr/bin/curl -ks "https://my.nethesis.it/api/customalerts/configuration?system_key=$SYSTEMID")
+ALERTSDBJSON=$(/usr/bin/curl -s "https://my.nethesis.it/api/customalerts/configuration?system_key=$SYSTEMID")
 RES1=$?
 
 if [[ $RES1 == 0 ]] ; then
