@@ -1,6 +1,6 @@
 Summary: NethServer alerts
 Name: nethserver-alerts
-Version: 1.1.2
+Version: 1.1.3
 Release: 1%{?dist}
 License: GPL
 Source0: %{name}-%{version}.tar.gz
@@ -36,6 +36,10 @@ rm -rf %{buildroot}
 %doc LICENSE
 
 %changelog
+* Fri Sep 08 2017 Giacomo Sanchietti <giacomo.sanchietti@nethesis.it> - 1.1.3-1
+- Fix db permissions - Nethesis/dev#5180
+- Fix table visualization
+
 * Fri Jul 07 2017 Stefano Fancello <stefano.fancello@nethesis.it> - 1.1.2-1
 - Check if alerts db is changed before overwriting it
 
