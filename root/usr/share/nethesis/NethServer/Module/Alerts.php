@@ -45,13 +45,30 @@ class Alerts extends \Nethgui\Controller\TableController
         );
 
         $this
-            ->setTableAdapter(new Alerts\AlertsAdapter($this->getPlatform()))
+            ->setTableAdapter(new \Nethgui\Adapter\LazyLoaderAdapter(array($this, 'readAlerts')))
             ->setColumns($columns)
             ->addTableAction(new Alerts\Refresh())
             ->addTableAction(new Alerts\Configure())
         ;
 
         parent::initialize();
+    }
+
+    public function readAlerts()
+    {
+        $loader = new \ArrayObject();
+        $alarms = $this->getPlatform()->getDatabase('alerts')->getAll();
+        foreach($alarms as $alarm => $props) {
+            $loader[$alarm] = array(
+                'Type' => $props['type'],
+                'Instance' => $props['Instance'],
+                'FailureMin' => $props['FailureMin'],
+                'FailureMax' => $props['FailureMax'],
+                'WarningMax' => $props['WarningMax'],
+                'WarningMin' => $props['WarningMin']
+            );
+        }
+        return $loader;
     }
 
     public function prepareViewForColumnInstance(\Nethgui\Controller\Table\Read $action, \Nethgui\View\ViewInterface $view, $key, $values, &$rowMetadata)
@@ -65,7 +82,7 @@ class Alerts extends \Nethgui\Controller\TableController
             case "ping":
                return $view->translate("Host_label").": ".$values['Instance'];
             default:
-               return $values['Instance'];
+               return $values['Instance'] ? $values['Instance'] : '-';
         }
     }
 
