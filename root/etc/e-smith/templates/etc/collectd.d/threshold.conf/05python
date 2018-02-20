@@ -7,8 +7,8 @@ LoadPlugin python
     LogTraces true
     Import nethserver_alerts
     <Module nethserver_alerts>
-        api_url "https://my.nethesis.it/isa"
-        lk "{$nethupdate{SystemID}}"
+        api_url "{ $subscription{'AlertsUrl'} }"
+        lk "{ $subscription{'SystemId'} }"
         debug no
     </Module>
 </Plugin>

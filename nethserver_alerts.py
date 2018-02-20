@@ -13,7 +13,7 @@ import time
 import os
 import threading
 
-api_url = "https://my.nethesis.it/isa"
+api_url = ""
 lk = False
 debug = False
 HEARTBEAT_PERIOD = 600 # seconds
