@@ -38,7 +38,8 @@ def dispatch(endpoint, payload):
     while len(dispatch.queue) > 0:
         endpoint, payload = dispatch.queue[0]
         try:
-            response = requests.post(api_url + endpoint , payload, timeout = 20)
+            auth_headers = {'SystemID': lk}
+            response = requests.post(api_url + endpoint , json=payload, headers = auth_headers, timeout = 20)
             if debug: collectd.info("[%s/%s] [%s] %s" % (response.status_code, response.reason, endpoint, json.dumps(payload)))
             if(response.status_code < 500):
                 dispatch.queue.pop(0)
@@ -91,7 +92,8 @@ def heartbeat():
         payload['lk'] = lk
 
         try:
-            response = requests.post(api_url + endpoint, payload, timeout = 20)
+            auth_headers = {'SystemID': lk}
+            response = requests.post(api_url + endpoint, json=payload, headers = auth_headers, timeout = 20)
             if debug: collectd.info("[%s/%s] [%s] %s" % (response.status_code, response.reason, endpoint, response.json()))
         except Exception as e:
             collectd.error("%s: %s" % (endpoint, str(e)))
