@@ -11,6 +11,7 @@ Requires: nethserver-lib >= 2.2.4-1
 Requires: curl
 BuildRequires: nethserver-devtools
 BuildRequires: gettext
+BuildRequires: python2-devel
 
 %description
 NethServer monitoring agent to trigger alarms
