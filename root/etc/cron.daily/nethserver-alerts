@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# Download alerts configuration from my.nethesis.it
-# if nethupdate[AlertsAutoUpdates] is enabled
+# Download alerts configuration from remote server
+# if subscription[AlertsAutoUpdates] is enabled
 
-status=$(/sbin/e-smith/config getprop nethupdate AlertsAutoUpdates)
+status=$(/sbin/e-smith/config getprop subscription AlertsAutoUpdates)
 
 if [ "$status" == "enabled" ]; then
     /sbin/e-smith/signal-event nethserver-alerts-save

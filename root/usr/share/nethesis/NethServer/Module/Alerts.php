@@ -114,6 +114,7 @@ class Alerts extends \Nethgui\Controller\TableController
     {
         parent::prepareView($view);
         if (isset($view['read'])) {
+            $view['read']['Url'] = $this->getPlatform()->getDatabase('configuration')->getProp('subscription', 'AlertsUrl');
             $view['read']->setTemplate('NethServer\Template\Alerts');
             $view['read']['updated'] = '-';
             if ( file_exists('/var/lib/nethserver/db/alerts') ) {

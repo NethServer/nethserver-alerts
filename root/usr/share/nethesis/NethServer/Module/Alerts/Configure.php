@@ -33,14 +33,14 @@ class Configure extends \Nethgui\Controller\Table\AbstractAction
     public function initialize()
     {
         parent::initialize();
-        $this->declareParameter('AlertsAutoUpdates', Validate::SERVICESTATUS, array('configuration', 'nethupdate', 'AlertsAutoUpdates'));
+        $this->declareParameter('AlertsAutoUpdates', Validate::SERVICESTATUS, array('configuration', 'subscription', 'AlertsAutoUpdates'));
     }
 
     public function process()
     {
         if ($this->getRequest()->isMutation()) {
             $configDb = $this->getPlatform()->getDatabase('configuration');
-            $configDb->setProp('nethupdate', array('AlertsAutoUpdates' => $this->parameters['AlertsAutoUpdates']));
+            $configDb->setProp('subscription', array('AlertsAutoUpdates' => $this->parameters['AlertsAutoUpdates']));
             $this->getPlatform()->signalEvent('nethserver-alerts-save');
         }
     }
