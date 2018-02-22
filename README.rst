@@ -45,8 +45,8 @@ To configure execute: ::
   config setprop subscription AlertsUrl https://my.nethserver.com/api/
   signal-event nethserver-alerts-update
 
-Nethesis Enterprise subscriptions
----------------------------------
+Nethesis partner program
+------------------------
 
 URL: https://my.nethesis.it/isa
 
