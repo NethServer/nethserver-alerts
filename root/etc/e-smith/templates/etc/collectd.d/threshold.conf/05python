@@ -9,6 +9,7 @@ LoadPlugin python
     <Module nethserver_alerts>
         api_url "{ $subscription{'AlertsUrl'} }"
         lk "{ $subscription{'SystemId'} }"
+        secret "{ $subscription{'Secret'} }"
         debug no
     </Module>
 </Plugin>

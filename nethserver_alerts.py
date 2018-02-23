@@ -15,6 +15,7 @@ import threading
 
 api_url = ""
 lk = False
+secret = False
 debug = False
 HEARTBEAT_PERIOD = 600 # seconds
 MAX_QUEUE_LENGTH = 50
@@ -38,7 +39,7 @@ def dispatch(endpoint, payload):
     while len(dispatch.queue) > 0:
         endpoint, payload = dispatch.queue[0]
         try:
-            auth_headers = {'SystemID': lk}
+            auth_headers = {'Authorization': "token %s" % secret}
             response = requests.post(api_url + endpoint , json=payload, headers = auth_headers, timeout = 20)
             if debug: collectd.info("[%s/%s] [%s] %s" % (response.status_code, response.reason, endpoint, json.dumps(payload)))
             if(response.status_code < 500):
@@ -92,7 +93,7 @@ def heartbeat():
         payload['lk'] = lk
 
         try:
-            auth_headers = {'SystemID': lk}
+            auth_headers = {'Authorization': "token %s" % secret}
             response = requests.post(api_url + endpoint, json=payload, headers = auth_headers, timeout = 20)
             if debug: collectd.info("[%s/%s] [%s] %s" % (response.status_code, response.reason, endpoint, response.json()))
         except Exception as e:

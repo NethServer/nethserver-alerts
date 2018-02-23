@@ -42,7 +42,7 @@ URL: https://my.nethserver.com/api/
 
 To configure execute: ::
 
-  config setprop subscription AlertsUrl https://my.nethserver.com/api/
+  config setprop subscription AlertsUrl https://my.nethserver.com/api/machine/
   signal-event nethserver-alerts-update
 
 Nethesis partner program
