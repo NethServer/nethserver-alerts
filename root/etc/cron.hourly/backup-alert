@@ -42,29 +42,25 @@ if($backup_status eq 'disabled') { exit (3); }
 
 # open file
 my $severity = '';
-my $logFile = $backup->prop('LogFile') || '/var/log/last-backup.log';
+my $logFile = '/var/log/backup-data.log';
 
 # backup-data has never been executed
-if ( ! -e '/var/log/backup-data.log') {
+if ( ! -e $logFile) {
     exit (3);
 }
 if( -e $logFile ) {
-    open(my $fh, "<", $logFile);
-    read $fh, my $content, -s $fh;
-
-    # check if file is in correct format
-    if($content =~ /\nErrors\s\d+/) {
-        # check for errors
-        $content =~ /\nErrors\s(\d+)/;
-        # check severity
-        $severity = ($1 eq 0 ? 'okay' : 'failure');
-    } else {
-        # backup is failed for some reasons...
-        $severity = 'failure';
-    }
-
+    open(my $fh, "tail -1 $logFile |");
+    my $content = <$fh>;
     # close file
     close($fh) || exit (5);
+    # check if file is in correct format
+    if($content =~ /.* - (.*) - .*/) {
+        exit 0 if ($1 eq 'START' or $1 eq 'STEP');
+        $severity = ($1 eq 'SUCCESS' ? 'okay' : 'failure');
+    } else {
+        # backup status is unknown
+        $severity = 'failure';
+    }
 } else {
     $severity = 'failure';
 }
