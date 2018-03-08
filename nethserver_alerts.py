@@ -68,7 +68,7 @@ dispatch.queue = []
 
 
 def config(conf):
-    global lk, api_url, debug
+    global lk, secret, api_url, debug
     for child in conf.children:
         if child.key == 'api_url':
             api_url = child.values[0]
@@ -76,6 +76,8 @@ def config(conf):
                 api_url += "/"
         elif child.key == 'lk':
             lk = child.values[0]
+	elif child.key == 'secret':
+	    secret = child.values[0]
         elif child.key == 'debug':
             debug = str(child.values[0]).lower() in ["1", "yes", "true", "enabled"]
 
@@ -107,7 +109,7 @@ def heartbeat():
         try:
             auth_headers = {'Authorization': "token %s" % secret}
             response = requests.post(api_url + endpoint, json=payload, headers = auth_headers, timeout = 20)
-            if debug: collectd.info("[%s/%s] [%s] %s" % (response.status_code, response.reason, endpoint, response.json()))
+            if debug: collectd.info("[%s] [%s/%s] [%s] %s" % (auth_headers, response.status_code, response.reason, endpoint, response.json()))
         except Exception as e:
             collectd.error("%s: %s" % (endpoint, str(e)))
 
