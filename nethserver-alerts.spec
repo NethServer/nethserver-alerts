@@ -9,6 +9,7 @@ Requires: nethserver-collectd
 Requires: python-requests
 Requires: nethserver-lib >= 2.2.4-1
 Requires: curl
+Requires: nethserver-subscription
 BuildRequires: nethserver-devtools
 BuildRequires: gettext
 BuildRequires: python2-devel
